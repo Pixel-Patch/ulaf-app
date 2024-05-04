@@ -12975,7 +12975,8 @@ section {
   padding: 4px 8px;
   border: 1px solid transparent;
   font-size: 12px;
-  font-weight: 600; }
+  font-weight: 600; 
+  margin-bottom: 5px;}
   .badge.style-1 {
     background-color: transparent;
     box-shadow: none;
@@ -13097,7 +13098,8 @@ a[class*="badge-outline-"]:hover {
   background: #ADB6C7; }
 
 .badge-success {
-  background-color: #159E42; }
+  background-color: #159E42; 
+}
 
 .badge-secondary {
   background-color: #F6DBB3; }
@@ -13113,7 +13115,8 @@ a[class*="badge-outline-"]:hover {
   background-color: #FF8730; }
 
 .badge-danger {
-  background-color: #CC0D39; }
+  background-color: #CC0D39; 
+  margin-right: 10px;}
 
 .badge-dark {
   background-color: #000; }
@@ -13155,7 +13158,8 @@ a[class*="badge-outline-"]:hover {
 
 .light.badge-light {
   background-color: #f1f1f1;
-  color: #000; }
+  color: #000; 
+  margin: 0.2rem 0.5rem 0.2rem 0.5rem}
 
 .bootstrap-label .label {
   display: inline-block;
@@ -17882,7 +17886,7 @@ label input {
     border-bottom: 1px solid var(--border-color);
     padding: 0 15px; }
     .dz-custom-swiper .dz-tabs-swiper .swiper-slide {
-      width: auto !important;
+      width: 50% !important;
       padding: 15px;
       border-bottom: 3px solid transparent;
       -webkit-transition: all 0.5s;
