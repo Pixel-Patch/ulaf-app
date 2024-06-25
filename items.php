@@ -1,5 +1,32 @@
 <?php $title = "ULAF - Item Page | PixelPatch";
 require("head.php"); ?>
+<style>
+	.mySwiper {
+		position: -webkit-sticky;
+		/* For Safari */
+		position: sticky;
+		top: 0;
+		z-index: 1000;
+		background-color: white;
+		/* Ensure background is solid to overlay content */
+		border-bottom: 1px solid #ccc;
+		/* Optional: to add a border for better visibility */
+	}
+
+	.dz-categories-bx.active {
+		border: 2px solid darkgreen;
+		/* Green border for active category */
+	}
+
+	.dz-categories-bx .title.active-title a {
+		color: #04764e;
+		/* Custom green color for active title */
+	}
+	.m-b20 {
+		margin-bottom: -10px;
+	}
+</style>
+
 
 </head>
 
@@ -14,12 +41,12 @@ require("head.php"); ?>
 		<header class="header header-fixed">
 			<div class="header-content">
 				<div class="left-content">
-					<a href="javascript:void(0);" class="back-btn">
+					<a href="index.php" class="back-btn">
 						<i class="feather icon-arrow-left"></i>
 					</a>
 				</div>
 				<div class="mid-content">
-					<h4 class="title">Products</h4>
+					<h4 class="title">Items</h4>
 				</div>
 				<div class="right-content d-flex align-items-center gap-4">
 					<a href="javascript:void(0);" class="font-24">
@@ -46,7 +73,126 @@ require("head.php"); ?>
 				</div>
 				<!-- SearchBox -->
 
-				<!-- Products Area -->
+				<!-- Categories Swiper -->
+				<div class="title-bar mb-0">
+					<h5 class="title">Categories</h5>
+				</div>
+				<div class="swiper categories-swiper dz-swiper m-b20">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#electronics">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M20 17.722c.595-.347 1-.985 1-1.722V5c0-1.103-.897-2-2-2H5c-1.103 0-2 .897-2 2v11c0 .736.405 1.375 1 1.722V18H2v2h20v-2h-2v-.278zM5 16V5h14l.002 11H5z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#electronics">Electronics</a></h6>
+									<span class="menus text-primary">67 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#personal-items">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M16 12h2v4h-2z"></path>
+											<path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM5 5h13v2H5a1.001 1.001 0 0 1 0-2zm15 14H5.012C4.55 18.988 4 18.805 4 18V8.815c.314.113.647.185 1 .185h15v10z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#personal-items">Personal Items</a></h6>
+									<span class="menus text-primary">25 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#clothing-shoes">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M21.316 4.055C19.556 3.478 15 1.985 15 2a3 3 0 1 1-6 0c0-.015-4.556 1.478-6.317 2.055A.992.992 0 0 0 2 5.003v3.716a1 1 0 0 0 1.242.97L6 9v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9l2.758.689A1 1 0 0 0 22 8.719V5.003a.992.992 0 0 0-.684-.948z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#clothing-shoes">Clothing & Shoes</a></h6>
+									<span class="menus text-primary">43 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#books-stationery">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758a2.01 2.01 0 0 1 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.08.182.15.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.046.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.01 2.01 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 15h-4.758a4.03 4.03 0 0 0-2.242.689V6c0-.551.448-1 1-1h6v13z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#books-stationery">Books and Stationery</a></h6>
+									<span class="menus text-primary">32 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#flasks-accessories">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M12 22c4.636 0 8-3.468 8-8.246C20 7.522 12.882 2.4 12.579 2.185a1 1 0 0 0-1.156-.001C11.12 2.397 4 7.503 4 13.75 4 18.53 7.364 22 12 22zm-.001-17.74C13.604 5.55 18 9.474 18 13.754 18 17.432 15.532 20 12 20s-6-2.57-6-6.25c0-4.29 4.394-8.203 5.999-9.49z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#flasks-accessories">Flasks & Accessories</a></h6>
+									<span class="menus text-primary">18 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#bags-backpacks">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M4 20h2V10a1 1 0 0 1 1-1h12V7a1 1 0 0 0-1-1h-3.051c-.252-2.244-2.139-4-4.449-4S6.303 3.756 6.051 6H3a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2zm6.5-16c1.207 0 2.218.86 2.45 2h-4.9c.232-1.14 1.243-2 2.45-2z"></path>
+											<path d="M21 11H9a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a1 1 0 0 0-1-1zm-6 7c-2.757 0-5-2.243-5-5h2c0 1.654 1.346 3 3 3s3-1.346 3-3h2c0 2.757-2.243 5-5 5z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#bags-backpacks">Bags and Backpacks</a></h6>
+									<span class="menus text-primary">56 Items</span>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="dz-categories-bx" onclick="makeActive(this)">
+								<div class="icon-bx">
+									<a href="#miscellaneous">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+											<path d="M7 22a4.965 4.965 0 0 0 3.535-1.465l9.193-9.193.707.708 1.414-1.414-8.485-8.486-1.414 1.414.708.707-9.193 9.193C2.521 14.408 2 15.664 2 17s.521 2.592 1.465 3.535A4.965 4.965 0 0 0 7 22zM18.314 9.928 15.242 13H6.758l7.314-7.314 4.242 4.242z"></path>
+										</svg>
+									</a>
+								</div>
+								<div class="dz-content">
+									<h6 class="title"><a href="#miscellaneous">Miscellaneous</a></h6>
+									<span class="menus text-primary">29 Items</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<!-- Categories Swiper -->
+
+				<!-- Items Area -->
 				<div class="dz-custom-swiper">
 					<div thumbsSlider="" class="swiper mySwiper dz-tabs-swiper">
 						<div class="swiper-wrapper">
@@ -65,86 +211,135 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product2.jpg" alt=""></a>
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Creamy Mocha Ome Coffee </a></h6>
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
 													<ul class="tag-list">
 
-														<span class="badge light badge-light" >01-23-2024 09:35:45 </span>
-											
-														<span class="badge light badge-light">Blue</span>
+														<li><a href="javascript:void(0);">Electronics</a>
+														</li>
 
-														<span class="badge light badge-light">College of Engineering</span>
-
-														<span class="badge light badge-light"> USF Office</span>
-
-													 
-														
-														<span class="badge light badge-light">Blue</span>
-														<span class="badge light badge-light">Blue</span>
 													</ul>
+													<span class="badge light badge-info">Posted</span><br>
+ 
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">Electronics</li>
-													<li>
-													</li>
-												</ul>
+
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product3.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Arabica Latte Ombe Coffee </a></h6>
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
 													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Coffee</a></li>
+
+														<li><a href="javascript:void(0);">Personal Items</a>
+														</li>
+
 													</ul>
+													<span class="badge light badge-warning">Claiming</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product4.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Original Hot Coffee </a></h6>
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
 													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Coffee</a></li>
+
+														<li><a href="javascript:void(0);">Electronics</a>
+														</li>
+
 													</ul>
+													<span class="badge light badge-info">Posted</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
+
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="dz-card list">
+											<div class="dz-media">
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
+											</div>
+											<div class="dz-content">
+												<div class="dz-head">
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<ul class="tag-list">
+
+														<li><a href="javascript:void(0);">Personal Items</a>
+														</li>
+
+													</ul>
+													<span class="badge light badge-warning">Claiming</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="dz-card list">
+											<div class="dz-media">
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
+											</div>
+											<div class="dz-content">
+												<div class="dz-head">
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<ul class="tag-list">
+
+														<li><a href="javascript:void(0);">Electronics</a>
+														</li>
+
+													</ul>
+													<span class="badge light badge-info">Posted</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+												</div>
+
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="dz-card list">
+											<div class="dz-media">
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
+											</div>
+											<div class="dz-content">
+												<div class="dz-head">
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<ul class="tag-list">
+
+														<li><a href="javascript:void(0);">Personal Items</a>
+														</li>
+
+													</ul>
+													<span class="badge light badge-warning">Claiming</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+												</div>
 											</div>
 										</div>
 									</li>
@@ -155,109 +350,45 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product5.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Sweet Lemon Indonesian Tea</a></h6>
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
 													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Tea</a></li>
-														<li><a href="javascript:void(0);">Lemon</a></li>
+
+														<li><a href="javascript:void(0);">Electronics</a>
+														</li>
+
 													</ul>
+													<span class="badge light badge-success">Posted</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
+
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product2.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
+												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Creamy Mocha Ome Coffee </a></h6>
+													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
 													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Coffee</a></li>
+
+														<li><a href="javascript:void(0);">Personal Item</a>
+														</li>
+
 													</ul>
+													<span class="badge light badge-warning">Claiming</span><br>
+
+													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="dz-card list">
-											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product3.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
-											</div>
-											<div class="dz-content">
-												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Arabica Latte Ombe Coffee </a></h6>
-													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Coffee</a></li>
-													</ul>
-												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="dz-card list">
-											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product4.jpg" alt=""></a>
-												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
-											</div>
-											<div class="dz-content">
-												<div class="dz-head">
-													<h6 class="title"><a href="product-detail.php">Original Hot Coffee </a></h6>
-													<ul class="tag-list">
-														<li><a href="javascript:void(0);">Coffee</a></li>
-													</ul>
-												</div>
-												<ul class="dz-meta">
-													<li class="dz-price flex-1">$12.6</li>
-													<li>
-														<a href="product-detail.php" class="btn rounded-xl dz-buy-btn">
-															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M21.7329 21.68C21.8273 21.5791 21.8998 21.4597 21.9457 21.3295C21.9917 21.1992 22.0101 21.0608 21.9999 20.923L20.9999 7.92299C20.9805 7.67134 20.8666 7.43634 20.6811 7.26515C20.4957 7.09396 20.2523 6.99924 19.9999 6.99999H16.9999C16.9999 5.67391 16.4731 4.40214 15.5355 3.46446C14.5978 2.52677 13.326 1.99999 11.9999 1.99999C10.6738 1.99999 9.40207 2.52677 8.46438 3.46446C7.5267 4.40214 6.99992 5.67391 6.99992 6.99999H3.99992C3.74752 6.99924 3.50417 7.09396 3.3187 7.26515C3.13323 7.43634 3.01935 7.67134 2.99992 7.92299L1.99992 20.923C1.98929 21.0606 2.00727 21.199 2.05275 21.3294C2.09822 21.4597 2.17019 21.5792 2.26413 21.6804C2.35807 21.7816 2.47194 21.8622 2.59858 21.9172C2.72521 21.9722 2.86186 22.0004 2.99992 22H20.9999C21.1375 22 21.2737 21.9715 21.3998 21.9165C21.5259 21.8614 21.6393 21.7809 21.7329 21.68ZM11.9999 3.99999C12.7956 3.99999 13.5586 4.31606 14.1212 4.87867C14.6838 5.44128 14.9999 6.20434 14.9999 6.99999H8.99992C8.99992 6.20434 9.31599 5.44128 9.8786 4.87867C10.4412 4.31606 11.2043 3.99999 11.9999 3.99999ZM4.07992 20L4.92592 8.99999H6.99992V11C6.99992 11.2652 7.10527 11.5196 7.29281 11.7071C7.48035 11.8946 7.7347 12 7.99992 12C8.26513 12 8.51949 11.8946 8.70702 11.7071C8.89456 11.5196 8.99992 11.2652 8.99992 11V8.99999H14.9999V11C14.9999 11.2652 15.1053 11.5196 15.2928 11.7071C15.4803 11.8946 15.7347 12 15.9999 12C16.2651 12 16.5195 11.8946 16.707 11.7071C16.8946 11.5196 16.9999 11.2652 16.9999 11V8.99999H19.0739L19.9199 20H4.07992Z" fill="#04764E"></path>
-															</svg>
-															Buy
-														</a>
-													</li>
-												</ul>
 											</div>
 										</div>
 									</li>
@@ -267,7 +398,7 @@ require("head.php"); ?>
 						</div>
 					</div>
 				</div>
-				<!-- Products Area -->
+				<!-- Items Area -->
 			</div>
 		</main>
 		<!-- Main Content End -->
@@ -285,6 +416,46 @@ require("head.php"); ?>
 	<script src="assets/js/dz.carousel.js"></script>
 	<script src="assets/js/settings.js"></script>
 	<script src="assets/js/custom.js"></script>
+	<script>function makeActive(element) {
+    // Remove active class from all dz-categories-bx elements
+    var elements = document.getElementsByClassName('dz-categories-bx');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.remove('active');
+        var title = elements[i].querySelector('.title');
+        if (title) {
+            title.classList.remove('active-title');
+        }
+    }
+    
+    // Add active class to the clicked element
+    element.classList.add('active');
+    var title = element.querySelector('.title');
+    if (title) {
+        title.classList.add('active-title');
+    }
+    
+    // Scroll the clicked element into view, aligning it to the left first
+    element.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+    });
+    
+    // Adjust the scroll position to center the clicked element
+    var container = document.querySelector('.dz-categories-container'); // Assuming container class
+    var containerRect = container.getBoundingClientRect();
+    var elementRect = element.getBoundingClientRect();
+    var offset = elementRect.left - containerRect.left - (containerRect.width / 2) + (elementRect.width / 2);
+
+    container.scrollBy({
+        left: offset,
+        behavior: 'smooth'
+    });
+}
+
+
+	</script>
+
 </body>
 
 </html>

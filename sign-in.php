@@ -2,48 +2,16 @@
 <html lang="en">
 
 <head>
+	<?php
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 
-	<!-- Title -->
-	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
+	$title = "ULAF - Sign In | PixelPatch";
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="DexignZone">
-	<meta name="robots" content="index, follow">
+	require("head.php");
+	?>
 
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
-
-	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta property="og:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-
-	<meta name="format-detection" content="telephone=no">
-
-	<meta name="twitter:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta name="twitter:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta name="twitter:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-	<meta name="twitter:card" content="summary_large_image">
-
-	<!-- Mobile Specific -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, minimal-ui, viewport-fit=cover">
-
-	<!-- Favicons Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-
-	<!-- Globle Stylesheets -->
-
-	<!-- Stylesheets -->
-	<link rel="stylesheet" class="main-css" type="text/css" href="assets/css/style.css">
-
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
 
@@ -73,26 +41,28 @@
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
 					</div>
 					<div class="account-section">
-						<form class="m-b30">
+
+						<form id="signin-form" onsubmit="event.preventDefault(); submitSignIn();">
 							<div class="mb-4">
-								<label class="form-label" for="name">Username</label>
+								<label class="form-label" for="usernameEmail">Username/Email</label>
 								<div class="input-group input-mini input-lg">
-									<input type="name" id="name" class="form-control" value="williamsmith">
+									<input type="text" id="usernameEmail" name="usernameEmail" class="form-control" placeholder="username/email" required>
 								</div>
 							</div>
 							<div class="m-b30">
 								<label class="form-label" for="password">Password</label>
 								<div class="input-group input-mini input-lg">
-									<input type="password" id="password" class="form-control dz-password" value="123456789">
+									<input type="password" id="password" name="password" class="form-control dz-password" placeholder="**********" required>
 									<span class="input-group-text show-pass">
 										<i class="icon feather icon-eye-off eye-close"></i>
 										<i class="icon feather icon-eye eye-open"></i>
 									</span>
 								</div>
 							</div>
-							<a href="index.php" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a>
+							<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button>
 							<p class="form-text">Forgot Password? <a href="forgot-password.php" class="link ms-2">Reset Password</a></p>
 						</form>
+
 						<div class="text-center account-footer">
 							<p class="text-light">Dont have any account?</p>
 							<a href="sign-up.php" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">CREATE AN ACCOUNT</a>
@@ -102,6 +72,17 @@
 			</div>
 		</main>
 		<!-- Main Content End  -->
+
+		<!-- Add this modal to your HTML -->
+		<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content" id="alertModalContent" style="font-size:large; ">
+					<div class="modal-body" id="alertModalBody">
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 
 	</div>
@@ -114,6 +95,51 @@
 	<script src="assets/js/dz.carousel.js"></script><!-- Swiper -->
 	<script src="assets/js/settings.js"></script>
 	<script src="assets/js/custom.js"></script>
+	<script>
+		function showAlertModal(alertClass, alertTitle, message) {
+			const alertModalContent = document.getElementById('alertModalContent');
+			const alertModalBody = document.getElementById('alertModalBody');
+
+			// Set the class and content of the alert
+			alertModalContent.className = `modal-content alert ${alertClass} alert-dismissible alert-alt fade show`;
+			alertModalBody.innerHTML = `<strong>${alertTitle}</strong> ${message}`;
+
+			// Show the modal
+			new bootstrap.Modal(document.getElementById('alertModal')).show();
+		}
+
+		function submitSignIn() {
+			const form = document.getElementById('signin-form');
+			const formData = new FormData(form);
+
+			fetch('submit_signin.php', {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => {
+					if (!response.ok) {
+						console.error('Server responded with status', response.status, 'and status text', response.statusText);
+						return response.text(); // Get the response as text instead of JSON
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.status === 'success') {
+						showAlertModal('alert-primary', 'Success!', data.message);
+						setTimeout(() => {
+							window.location.href = 'index.php';
+						}, 2000);
+					} else {
+						showAlertModal(data.alertClass, data.alertTitle, data.message);
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					showAlertModal('alert-danger', 'Error!', 'An error occurred while processing your request.');
+				});
+		}
+	</script>
+
 </body>
 
 </html>

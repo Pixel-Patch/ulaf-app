@@ -20,13 +20,26 @@ require("head.php"); ?>
 		width: 350px;
 	}
 
-	ul {
-		padding: 10px 10px 20px 10px;
-
+	.dz-card-overlay a {
+		margin-left: 10px;
 	}
-	p{
+
+	ul {
+		padding: 0px 10px 0px 10px;
+	}
+
+	p {
 		margin: 5px 0 0 10px;
 	}
+
+	.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 </style>
 
 </head>
@@ -96,103 +109,126 @@ require("head.php"); ?>
 							<a href="items.php">load more</a>
 						</div>
 						<div class="swiper-wrapper">
-							<div class="swiper-slide ">
-								<div class="dz-card-overlay style-1">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/nike-air-jordan.png" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">Nike Jordan</a></h6>
-										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Sports Equipment</del></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/pic1.png" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">Coffee</a></h6>
-										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Miscellaneous</del></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/apple-watch.png" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Electronics</del></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-
 							<div class="swiper-slide">
 								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
 									<div class="dz-media">
 										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.png" alt="image">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
 										</a>
 									</div>
 									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">Face Cream</a></h6>
+										<h6 class="title">
+											<span class="badge badge-success">Found</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
 										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Miscellaneous</del></li>
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
 										</ul>
 									</div>
 								</div>
 							</div>
-
 							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1">
+								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
 									<div class="dz-media">
 										<a href="product-detail.php">
-											<img src="assets/images/featured/headphones.png" alt="image">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
 										</a>
 									</div>
 									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">Headphones</a></h6>
+										<h6 class="title">
+											<span class="badge badge-danger">Lost</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
 										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Electronics</del></li>
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
 										</ul>
 									</div>
 								</div>
 							</div>
-
 							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1">
+								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
 									<div class="dz-media">
 										<a href="product-detail.php">
-											<img src="assets/images/featured/iphone.png" alt="image">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
 										</a>
 									</div>
 									<div class="dz-info">
-										<h6 class="title"><a href="product-detail.php">iPhone</a></h6>
+										<h6 class="title">
+											<span class="badge badge-success">Found</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
 										<ul class="dz-meta">
-											<li class="dz-price"><del class="no-line">Electronics</del></li>
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
 										</ul>
 									</div>
 								</div>
 							</div>
-
-
+							<div class="swiper-slide">
+								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
+									<div class="dz-media">
+										<a href="product-detail.php">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
+										</a>
+									</div>
+									<div class="dz-info">
+										<h6 class="title">
+											<span class="badge badge-danger">Lost</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
+										<ul class="dz-meta">
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="swiper-slide">
+								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
+									<div class="dz-media">
+										<a href="product-detail.php">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
+										</a>
+									</div>
+									<div class="dz-info">
+										<h6 class="title">
+											<span class="badge badge-success">Found</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
+										<ul class="dz-meta">
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="swiper-slide">
+								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
+									<div class="dz-media">
+										<a href="product-detail.php">
+											<img src="assets/images/featured/facecream.jpg" alt="image">
+										</a>
+									</div>
+									<div class="dz-info">
+										<h6 class="title">
+											<span class="badge badge-danger">Lost</span><br>
+											<a href="product-detail.php">Face Cream</a>
+										</h6>
+										<ul class="dz-meta">
+											<li class="dz-price">
+												<del class="no-line">Categories</del>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</div>
 
 					</div>
@@ -208,7 +244,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="electronics.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M20 17.722c.595-.347 1-.985 1-1.722V5c0-1.103-.897-2-2-2H5c-1.103 0-2 .897-2 2v11c0 .736.405 1.375 1 1.722V18H2v2h20v-2h-2v-.278zM5 16V5h14l.002 11H5z"></path>
 											</svg>
 										</a>
@@ -224,7 +260,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="personal-items.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M16 12h2v4h-2z"></path>
 												<path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM5 5h13v2H5a1.001 1.001 0 0 1 0-2zm15 14H5.012C4.55 18.988 4 18.805 4 18V8.815c.314.113.647.185 1 .185h15v10z"></path>
 											</svg>
@@ -240,7 +276,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="clothing-shoes.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M21.316 4.055C19.556 3.478 15 1.985 15 2a3 3 0 1 1-6 0c0-.015-4.556 1.478-6.317 2.055A.992.992 0 0 0 2 5.003v3.716a1 1 0 0 0 1.242.97L6 9v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9l2.758.689A1 1 0 0 0 22 8.719V5.003a.992.992 0 0 0-.684-.948z"></path>
 											</svg>
 										</a>
@@ -255,7 +291,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="books-stationery.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758a2.01 2.01 0 0 1 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.08.182.15.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.046.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.01 2.01 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 15h-4.758a4.03 4.03 0 0 0-2.242.689V6c0-.551.448-1 1-1h6v13z"></path>
 											</svg>
 										</a>
@@ -270,7 +306,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="flasks-accessories.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M12 22c4.636 0 8-3.468 8-8.246C20 7.522 12.882 2.4 12.579 2.185a1 1 0 0 0-1.156-.001C11.12 2.397 4 7.503 4 13.75 4 18.53 7.364 22 12 22zm-.001-17.74C13.604 5.55 18 9.474 18 13.754 18 17.432 15.532 20 12 20s-6-2.57-6-6.25c0-4.29 4.394-8.203 5.999-9.49z"></path>
 											</svg>
 										</a>
@@ -285,7 +321,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="bags-backpacks.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M4 20h2V10a1 1 0 0 1 1-1h12V7a1 1 0 0 0-1-1h-3.051c-.252-2.244-2.139-4-4.449-4S6.303 3.756 6.051 6H3a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2zm6.5-16c1.207 0 2.218.86 2.45 2h-4.9c.232-1.14 1.243-2 2.45-2z"></path>
 												<path d="M21 11H9a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a1 1 0 0 0-1-1zm-6 7c-2.757 0-5-2.243-5-5h2c0 1.654 1.346 3 3 3s3-1.346 3-3h2c0 2.757-2.243 5-5 5z"></path>
 											</svg>
@@ -301,7 +337,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="miscellaneous.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
 												<path d="M7 22a4.965 4.965 0 0 0 3.535-1.465l9.193-9.193.707.708 1.414-1.414-8.485-8.486-1.414 1.414.708.707-9.193 9.193C2.521 14.408 2 15.664 2 17s.521 2.592 1.465 3.535A4.965 4.965 0 0 0 7 22zM18.314 9.928 15.242 13H6.758l7.314-7.314 4.242 4.242z"></path>
 											</svg>
 										</a>
@@ -329,14 +365,15 @@ require("head.php"); ?>
 							<div class="swiper-slide">
 								<div class="dz-wishlist-bx">
 									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic4.jpg" alt=""></a>
+										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
 									</div>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<p>Current Location : USF Office </p>
-											<p>Color : Blue </p>
-											<p>Have scatches in bottom left</p>
+											<span class="badge badge-success">Found</span>
+											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+
+											<p>Have scatches in bottghghghfghom left
 										</div>
 									</div>
 								</div>
@@ -344,13 +381,15 @@ require("head.php"); ?>
 							<div class="swiper-slide">
 								<div class="dz-wishlist-bx">
 									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic4.jpg" alt=""></a>
+										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
 									</div>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<p>Color : Blue </p>
-											<p>Have scatches in bottom left</p>
+											<span class="badge badge-danger">Lost</span>
+											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+
+											<p>Have scatches in bottghghghfghom left
 										</div>
 									</div>
 								</div>
@@ -358,13 +397,15 @@ require("head.php"); ?>
 							<div class="swiper-slide">
 								<div class="dz-wishlist-bx">
 									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic4.jpg" alt=""></a>
+										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
 									</div>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<p>Color : Blue </p>
-											<p>Have scatches in bottom left</p>
+											<span class="badge badge-success">Found</span>
+											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+
+											<p>Have scatches in bottghghghfghom left
 										</div>
 									</div>
 								</div>
@@ -372,21 +413,19 @@ require("head.php"); ?>
 							<div class="swiper-slide">
 								<div class="dz-wishlist-bx">
 									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic4.jpg" alt=""></a>
+										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
 									</div>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<p>Color : Blue </p>
-											<p>Have scatches in bottom left</p>
+											<span class="badge badge-danger">Lost</span>
+											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+
+											<p>Have scatches in bottghghghfghom left
 										</div>
 									</div>
 								</div>
 							</div>
-
-
-
-
 						</div>
 
 					</div>
@@ -419,15 +458,9 @@ require("head.php"); ?>
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
 											<span class="badge badge-success">Found</span>
-
 											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 
-											<span class="badge light badge-light">Blue</span>
-
-											<span class="badge light badge-light">College of Engineering</span>
 											<p>Have scatches in bottghghghfghom left
-
-
 										</div>
 									</div>
 								</div>
@@ -440,13 +473,14 @@ require("head.php"); ?>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-danger">Lost</span>
-
+											<span class="badge badge-success">Found</span>
 											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-											<span class="badge light badge-light">College of Engineering</span>
 
-											
-										
+											<p>Have scatches in bottghghg hfghom left gfhfghfgh dfgfdgdfg dfgfdgdfg sdfbdgggsfbhdsbf
+												dsf
+												d
+												ffgdfg gdfgfdg gfdgfdgdf g dfg fdgfd gfdgdfgdfg
+												sdf
 										</div>
 									</div>
 								</div>
@@ -459,10 +493,10 @@ require("head.php"); ?>
 									<div class="dz-info">
 										<div class="dz-head">
 											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<p>Date : 01-23-2024 09:35:45</p>
-											<p>College : Blue</p>
-											<p>Current Location : USF Office</p>
-											<p>Description : Have scatches in bottom left</p>
+											<span class="badge badge-success">Found</span>
+											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
+
+											<p>Have scatches in bottghghghfghom left
 										</div>
 									</div>
 								</div>
@@ -529,6 +563,17 @@ require("head.php"); ?>
 	<script src="assets/js/settings.js"></script>
 	<script src="assets/js/custom.js"></script>
 	<script src="index.js"></script>
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+    const descriptions = document.querySelectorAll(".dz-info p");
+
+    descriptions.forEach(description => {
+        // Apply the class regardless of length to ensure the two-line limit
+        description.classList.add("truncated");
+    });
+});
+
+	</script>
 </body>
 
 </html>

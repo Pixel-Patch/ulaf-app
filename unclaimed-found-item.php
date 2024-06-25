@@ -122,7 +122,7 @@
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="product-detail.php"><img src="assets/images/products/product5.jpg" alt=""></a>
+												<a href="product-detail.php"><img src="assets/images/item/product5.jpg" alt=""></a>
 												<div class="dz-rating"><i class="fa fa-star"></i> 3.8</div>
 											</div>
 											<div class="dz-content">

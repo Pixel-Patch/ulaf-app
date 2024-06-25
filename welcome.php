@@ -1,51 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php $title = "ULAF - Welcome | PixelPatch";
 
-<head>
-
-	<!-- Title -->
-	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
-
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="DexignZone">
-	<meta name="robots" content="index, follow">
-
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
-
-	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta property="og:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-
-	<meta name="format-detection" content="telephone=no">
-
-	<meta name="twitter:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta name="twitter:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta name="twitter:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-	<meta name="twitter:card" content="summary_large_image">
-
-	<!-- Mobile Specific -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, minimal-ui, viewport-fit=cover">
-
-	<!-- Favicons Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-
-	<!-- Stylesheets -->
-	<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-	<!-- Animte -->
-	<link rel="stylesheet" href="assets/vendor/wow/css/libs/animate.css">
-
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+require("head.php"); ?>
 
 </head>
 
@@ -77,8 +32,8 @@
 						<div class="dz-button-group">
 							<h3 class="title">Morning begins with <br> Ombe coffee</h3>
 							<a href="sign-in.php" class="btn btn-primary btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/inbox.png" alt=""><span>Login With Email</span></a>
-							<a href="sign-in.php" class="btn btn-facebook btn-primary btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/facebook.png" alt=""><span>Login with facebook</span></a>
-							<a href="sign-in.php" class="btn btn-white btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/google-mail.png" alt=""><span class="text-dark">Login with Google</span></a>
+							<!-- <a href="sign-in.php" class="btn btn-facebook btn-primary btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/facebook.png" alt=""><span>Login with facebook</span></a>
+							<a href="sign-in.php" class="btn btn-white btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/google-mail.png" alt=""><span class="text-dark">Login with Google</span></a> -->
 						</div>
 					</div>
 				</div>
