@@ -1,5 +1,5 @@
 <?php $title = "ULAF - Item Page | PixelPatch";
-require("head.php"); ?>
+require("header.php"); ?>
 <style>
 	.mySwiper {
 		position: -webkit-sticky;
@@ -22,6 +22,7 @@ require("head.php"); ?>
 		color: #04764e;
 		/* Custom green color for active title */
 	}
+
 	.m-b20 {
 		margin-bottom: -10px;
 	}
@@ -211,12 +212,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Electronics</a>
@@ -224,7 +225,7 @@ require("head.php"); ?>
 
 													</ul>
 													<span class="badge light badge-info">Posted</span><br>
- 
+
 													<span class="badge light badge-light">01-23-2024 09:35:45 </span>
 												</div>
 
@@ -234,12 +235,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Personal Items</a>
@@ -256,12 +257,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Electronics</a>
@@ -279,12 +280,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Personal Items</a>
@@ -301,12 +302,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Electronics</a>
@@ -324,12 +325,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Personal Items</a>
@@ -350,12 +351,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Electronics</a>
@@ -373,12 +374,12 @@ require("head.php"); ?>
 									<li>
 										<div class="dz-card list">
 											<div class="dz-media">
-												<a href="item-detail.php"><img src="assets/images/items/product2.jpg" alt=""></a>
+												<a href="view-item-details.php"><img src="assets/images/items/product2.jpg" alt=""></a>
 
 											</div>
 											<div class="dz-content">
 												<div class="dz-head">
-													<h6 class="title"><a href="item-detail.php">Item Name</a></h6>
+													<h6 class="title"><a href="view-item-details.php">Item Name</a></h6>
 													<ul class="tag-list">
 
 														<li><a href="javascript:void(0);">Personal Item</a>
@@ -416,44 +417,43 @@ require("head.php"); ?>
 	<script src="assets/js/dz.carousel.js"></script>
 	<script src="assets/js/settings.js"></script>
 	<script src="assets/js/custom.js"></script>
-	<script>function makeActive(element) {
-    // Remove active class from all dz-categories-bx elements
-    var elements = document.getElementsByClassName('dz-categories-bx');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].classList.remove('active');
-        var title = elements[i].querySelector('.title');
-        if (title) {
-            title.classList.remove('active-title');
-        }
-    }
-    
-    // Add active class to the clicked element
-    element.classList.add('active');
-    var title = element.querySelector('.title');
-    if (title) {
-        title.classList.add('active-title');
-    }
-    
-    // Scroll the clicked element into view, aligning it to the left first
-    element.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-    });
-    
-    // Adjust the scroll position to center the clicked element
-    var container = document.querySelector('.dz-categories-container'); // Assuming container class
-    var containerRect = container.getBoundingClientRect();
-    var elementRect = element.getBoundingClientRect();
-    var offset = elementRect.left - containerRect.left - (containerRect.width / 2) + (elementRect.width / 2);
+	<script>
+		function makeActive(element) {
+			// Remove active class from all dz-categories-bx elements
+			var elements = document.getElementsByClassName('dz-categories-bx');
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].classList.remove('active');
+				var title = elements[i].querySelector('.title');
+				if (title) {
+					title.classList.remove('active-title');
+				}
+			}
 
-    container.scrollBy({
-        left: offset,
-        behavior: 'smooth'
-    });
-}
+			// Add active class to the clicked element
+			element.classList.add('active');
+			var title = element.querySelector('.title');
+			if (title) {
+				title.classList.add('active-title');
+			}
 
+			// Scroll the clicked element into view, aligning it to the left first
+			element.scrollIntoView({
+				behavior: 'smooth',
+				inline: 'center',
+				block: 'nearest'
+			});
 
+			// Adjust the scroll position to center the clicked element
+			var container = document.querySelector('.dz-categories-container'); // Assuming container class
+			var containerRect = container.getBoundingClientRect();
+			var elementRect = element.getBoundingClientRect();
+			var offset = elementRect.left - containerRect.left - (containerRect.width / 2) + (elementRect.width / 2);
+
+			container.scrollBy({
+				left: offset,
+				behavior: 'smooth'
+			});
+		}
 	</script>
 
 </body>

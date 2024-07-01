@@ -11359,7 +11359,7 @@ section {
 
 /*==== 5. Layout ====*/
 :root {
-  --headheight: 80px;
+  --headheight: 60px;
   --headwidth: 600px; }
 
 .space-y-large {
@@ -14851,7 +14851,7 @@ select.form-select {
       font-weight: 500;
       border: 1px solid var(--primary);
       padding: 7px 15px;
-      font-size: 13px;
+      font-size: 20px;
       margin-right: 0;
       border-radius: 20px; }
     .form-check.style-2 .form-check-input:checked + .form-check-label {
@@ -18564,7 +18564,7 @@ label input {
       margin: 0; }
 
 .edit-profile .profile-image {
-  margin: 20px 0;
+  margin: 0 0 24px 0 !important;
   text-align: center; }
 
 .edit-profile .avatar-upload .avatar-preview {

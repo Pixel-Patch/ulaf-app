@@ -255,7 +255,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="profile.php" class="item-content item-link">
+							<a href="user-profile.php" class="item-content item-link">
 								<div class="dz-icon icon-md icon-fill">
 									<i class="feather icon-user text-dark"></i>
 								</div>
@@ -265,7 +265,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="edit-profile.php" class="item-content item-link">
+							<a href="edit-user-profile.php" class="item-content item-link">
 								<div class="dz-icon icon-md icon-fill">
 									<i class="fi fi-rr-edit text-dark"></i>
 								</div>

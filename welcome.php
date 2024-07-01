@@ -1,6 +1,6 @@
 <?php $title = "ULAF - Welcome | PixelPatch";
 
-require("head.php"); ?>
+require("header.php"); ?>
 
 </head>
 

@@ -1,7 +1,13 @@
 <?php
 $title = "ULAF - Home | PixelPatch";
 
-require("head.php"); ?>
+require("header.php");
+require("fetch-user-data.php");
+
+$userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
+?>
+
+
 
 <style>
 	del {
@@ -33,13 +39,13 @@ require("head.php"); ?>
 	}
 
 	.truncated {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Number of lines to show */
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    text-overflow: ellipsis; 
-}
-
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		/* Number of lines to show */
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 </style>
 
 </head>
@@ -62,8 +68,8 @@ require("head.php"); ?>
 				<div class="header-content">
 					<div class="left-content">
 						<div class="info">
-							<p class="text m-b10">Good Morning</p>
-							<h3 class="title">Williams</h3>
+							<p class="text m-b10" id="greeting">Good Morning/Afternoon/Evening</p>
+							<h3 class="title"><?php echo htmlspecialchars($userData['Username'] ?? 'N/A'); ?></h3>
 						</div>
 					</div>
 					<div class="mid-content"></div>
@@ -102,12 +108,14 @@ require("head.php"); ?>
 					</div>
 					<!-- SearchBox -->
 
+
 					<!-- Overlay Card -->
 					<div class="swiper overlay-swiper1" style="padding-top: 20px;">
 						<div class="title-bar mb-0">
 							<h5 class="title">Recently Added</h5>
 							<a href="items.php">load more</a>
 						</div>
+
 						<div class="swiper-wrapper">
 							<div class="swiper-slide">
 								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
@@ -276,9 +284,7 @@ require("head.php"); ?>
 								<div class="dz-categories-bx">
 									<div class="icon-bx">
 										<a href="clothing-shoes.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M21.316 4.055C19.556 3.478 15 1.985 15 2a3 3 0 1 1-6 0c0-.015-4.556 1.478-6.317 2.055A.992.992 0 0 0 2 5.003v3.716a1 1 0 0 0 1.242.97L6 9v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9l2.758.689A1 1 0 0 0 22 8.719V5.003a.992.992 0 0 0-.684-.948z"></path>
-											</svg>
+											<i class="fa-regular fa-shirt" style="font-size:20px; margin-top:3px"></i>
 										</a>
 									</div>
 									<div class="dz-content">
@@ -517,14 +523,14 @@ require("head.php"); ?>
 					<a href="index.php" class="nav-link active">
 						<i class="fi fi-rr-home"></i>
 					</a>
-					<a href="wishlist.php" class="nav-link">
-						<i class="fi fi-rr-heart"></i>
-					</a>
 					<a href="cart.php" class="nav-link">
 						<i class="fi fi-rr-shopping-cart"></i>
 					</a>
-					<a href="profile.php" class="nav-link">
+					<a href="user-profile.php" class="nav-link">
 						<i class="fi fi-rr-user"></i>
+					</a>
+					<a href="add-item-details.php" class="nav-link">
+						<i class="fa-regular fa-file-circle-plus"></i>
 					</a>
 				</div>
 			</div>
@@ -532,29 +538,28 @@ require("head.php"); ?>
 		</div>
 		<!-- Nav Floting End -->
 
-		<!-- Modal
-	<div class="modal fade dz-pwa-modal" id="pwaModal" tabindex="-1" aria-labelledby="pwaModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<a href="javascript:void(0);" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="feather icon-x"></i></a>
-				<img class="logo dark" src="assets/images/app-logo/logo.png" alt="">
-				<img class="logo light" src="assets/images/app-logo/logo-white.png" alt="">
-				<h5 class="title">Ombe - Coffee Shop Mobile App Template</h5>
-				<p class="pwa-text">Install "Ombe Coffee Shop Mobile App Template" to your home screen for easy access, just like any other app</p>
-				<button type="button" class="btn pwa-btn">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12 16.0001V13.0001M12 13.0001V10.0001M12 13.0001H9M12 13.0001H15M4 16.8002V11.4522C4 10.9179 4 10.6506 4.06497 10.4019C4.12255 10.1816 4.2173 9.97307 4.34521 9.78464C4.48955 9.57201 4.69064 9.39569 5.09277 9.04383L9.89436 4.84244C10.6398 4.19014 11.0126 3.86397 11.4324 3.73982C11.8026 3.63035 12.1972 3.63035 12.5674 3.73982C12.9875 3.86406 13.3608 4.19054 14.1074 4.84383L18.9074 9.04383C19.3096 9.39569 19.5102 9.57201 19.6546 9.78464C19.7825 9.97307 19.8775 10.1816 19.9351 10.4019C20 10.6505 20 10.9184 20 11.4522V16.8037C20 17.9216 20 18.4811 19.7822 18.9086C19.5905 19.2849 19.2842 19.5906 18.9079 19.7823C18.4805 20.0001 17.9215 20.0001 16.8036 20.0001H7.19691C6.07899 20.0001 5.5192 20.0001 5.0918 19.7823C4.71547 19.5906 4.40973 19.2849 4.21799 18.9086C4 18.4807 4 17.9203 4 16.8002Z" stroke="#03764D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-					<span>Add to Home Screen</span>
-				</button>
+		<!-- Modal -->
+		<div class="modal fade dz-pwa-modal" id="pwaModal" tabindex="-1" aria-labelledby="pwaModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<img class="logo dark" src="assets/images/app-logo/logo.png" alt="">
+					<img class="logo light" src="assets/images/app-logo/logo-white.png" alt="">
+					<h5 class="title">ULAF - University Lost and Found</h5>
+					<p class="pwa-text">To fully utilize the app's features, including posting and claiming items, please complete the registration process.</p>
+					<a href="add-user-details.php" class="btn pwa-btn" onclick="completeRegistration()">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 16.0001V13.0001M12 13.0001V10.0001M12 13.0001H9M12 13.0001H15M4 16.8002V11.4522C4 10.9179 4 10.6506 4.06497 10.4019C4.12255 10.1816 4.2173 9.97307 4.34521 9.78464C4.48955 9.57201 4.69064 9.39569 5.09277 9.04383L9.89436 4.84244C10.6398 4.19014 11.0126 3.86397 11.4324 3.73982C11.8026 3.63035 12.1972 3.63035 12.5674 3.73982C12.9875 3.86406 13.3608 4.19054 14.1074 4.84383L18.9074 9.04383C19.3096 9.39569 19.5102 9.57201 19.6546 9.78464C19.7825 9.97307 19.8775 10.1816 19.9351 10.4019C20 10.6505 20 10.9184 20 11.4522V16.8037C20 17.9216 20 18.4811 19.7822 18.9086C19.5905 19.2849 19.2842 19.5906 18.9079 19.7823C18.4805 20.0001 17.9215 20.0001 16.8036 20.0001H7.19691C6.07899 20.0001 5.5192 20.0001 5.0918 19.7823C4.71547 19.5906 4.40973 19.2849 4.21799 18.9086C4 18.4807 4 17.9203 4 16.8002Z" stroke="#03764D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						<span>Complete Registration</span>
+					</a>
+				</div>
 			</div>
 		</div>
-	</div> -->
 		<!-- PWA End -->
 
 	</div>
 	<!--**********************************
-    Scripts
+Scripts
 ***********************************-->
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -564,15 +569,33 @@ require("head.php"); ?>
 	<script src="assets/js/custom.js"></script>
 	<script src="index.js"></script>
 	<script>
-	document.addEventListener("DOMContentLoaded", function() {
-    const descriptions = document.querySelectorAll(".dz-info p");
+		// Calculate the current time in PHT (Philippine Time)
+		function getPhilippineTime() {
+			const now = new Date();
+			const utcOffset = now.getTimezoneOffset() * 60000;
+			const philippinesOffset = 8 * 60 * 60000; // UTC+8 for PHT
+			const pht = new Date(now.getTime() + utcOffset + philippinesOffset);
+			return pht;
+		}
 
-    descriptions.forEach(description => {
-        // Apply the class regardless of length to ensure the two-line limit
-        description.classList.add("truncated");
-    });
-});
+		function getGreeting() {
+			const currentHour = getPhilippineTime().getHours();
+			let greeting;
 
+			if (currentHour < 12) {
+				greeting = "Good Morning";
+			} else if (currentHour < 18) {
+				greeting = "Good Afternoon";
+			} else {
+				greeting = "Good Evening";
+			}
+
+			return greeting;
+		}
+
+		// Set the greeting and username dynamically
+		document.getElementById('greeting').innerText = getGreeting();
+		document.getElementById('username').innerText = username;
 	</script>
 </body>
 

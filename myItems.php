@@ -172,7 +172,7 @@
 				<a href="cart.php" class="nav-link active">
 					<i class="fi fi-rr-shopping-cart"></i>
 				</a>
-				<a href="profile.php" class="nav-link">
+				<a href="user-profile.php" class="nav-link">
 					<i class="fi fi-rr-user"></i>
 				</a>
 			</div>

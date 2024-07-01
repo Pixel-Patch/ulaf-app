@@ -1,76 +1,101 @@
 // Register Service worker to control making site work offline
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('app.js')
-	.then(() => { console.log('Service Worker Registered'); });
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("app.js").then(() => {
+    console.log("Service Worker Registered");
+  });
 }
-  
-// Code to handle install prompt on desktop
+
+// Variables for managing the PWA prompt and registration status
 let deferredPrompt;
-const pwaBtn = document.querySelector('.pwa-btn');
-const installText = document.querySelector('.pwa-text');
-var PwaKey = 'pwa-modal';
-var PwaValue = getCookie(PwaKey);
-//pwaBtn.style.display = 'none';
+const pwaBtn = document.querySelector(".pwa-btn");
+const PwaKey = "pwa-modal";
+let PwaValue = getCookie(PwaKey);
 
-/* for ios start*/
-function isThisDeviceRunningiOS(){
-  if (['iPad Simulator', 'iPhone Simulator','iPod Simulator', 'iPad','iPhone','iPod','ios'].includes(navigator.platform) || navigator.userAgent.indexOf('Mac OS X') != -1){ 
-	installText.innerHTML = 'Install "Ombe - Coffee Shop Mobile App Template" to your home screen for easy access click to safari share option "Add to Home Screen".';
-	pwaBtn.remove();
-	return true;
+// Event listener for the beforeinstallprompt event
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  if (!PwaValue) {
+    setTimeout(checkRegistrationStatus, 3000);
   }
+
+  pwaBtn.addEventListener("click", () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        setCookie(PwaKey, false);
+      }
+      deferredPrompt = null;
+    });
+  });
+});
+
+// Function to check registration status
+function checkRegistrationStatus() {
+  $.ajax({
+    url: "check-registration-status.php",
+    type: "GET",
+    success: function (response) {
+      try {
+        const data = JSON.parse(response);
+        if (data.isRegistered) {
+          console.log("User is registered.");
+          localStorage.setItem("isRegistered", "true");
+        } else {
+          console.log("User is not registered.");
+          localStorage.removeItem("isRegistered");
+          jQuery(".dz-pwa-modal").modal("show");
+        }
+      } catch (error) {
+        console.error("Error parsing response:", error);
+      }
+    },
+    error: function (error) {
+      console.error("Error with AJAX call:", error);
+    },
+  });
 }
-isThisDeviceRunningiOS();
-/* for ios end */
 
-window.addEventListener('beforeinstallprompt', (e) => {
-	
-	// Prevent Chrome 67 and earlier from automatically showing the prompt
-	e.preventDefault();
-	
-	// Stash the event so it can be triggered later.
-	deferredPrompt = e;
-	
-	// Update UI to notify the user they can add to home screen
-	//pwaBtn.style.display = 'block';
-	if(!PwaValue)
-	{
-		setTimeout(function(){
-			jQuery('.dz-pwa-modal').modal("show");
-		}, 3000);
-	}
-	
-	pwaBtn.addEventListener('click', () => {
-		// hide our user interface that shows our A2HS button
-		//pwaBtn.style.display = 'none';
-		
-		// Show the prompt
-		deferredPrompt.prompt();
-		
-		// Wait for the user to respond to the prompt
-		deferredPrompt.userChoice.then((choiceResult) => {
-			if (choiceResult.outcome === 'accepted') {
-				setCookie(PwaKey, false);
-			}
-			deferredPrompt = null;
-		});
-	});
-	
+// Complete registration and hide the modal
+function completeRegistration() {
+  localStorage.setItem("isRegistered", "true");
+  jQuery(".dz-pwa-modal").modal("hide");
+}
+
+// Logout button click event
+jQuery(document).ready(function () {
+  // Logout button click event
+  jQuery("#logoutButton").on("click", function (e) {
+    // Prevent the default behavior of the link
+    e.preventDefault();
+
+    // Clear isRegistered from localStorage
+    localStorage.removeItem("isRegistered");
+
+    // Redirect to the logout.php to handle server-side logout
+    window.location.href = "logout.php";
+  });
+
+  // PWA button click event
+  jQuery(".pwa-btn").on("click", function () {
+    jQuery(".dz-pwa-modal").modal("hide");
+    setCookie(PwaKey, true);
+  });
+
+  // Check registration status on page load
+  if (!localStorage.getItem("isRegistered")) {
+    setTimeout(checkRegistrationStatus, 3000);
+  }
 });
 
-jQuery(document).ready(function() {
-    
-	// PWA
-	jQuery('.pwa-btn').on('click',function(){
-		jQuery('.dz-pwa-modal').modal('hide');	
-		setCookie(PwaKey, true);
-	});
-	
-	// PWA Display Mode Standalone
-	if (!window.matchMedia('(display-mode: standalone)').matches) {
-		setTimeout(function(){
-			jQuery('.dz-pwa-modal').modal("show");
-		}, 3000);
-	}
-	
-});
+// Helper functions for setting and getting cookies
+function setCookie(name, value) {
+  document.cookie = name + "=" + value + ";path=/";
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
