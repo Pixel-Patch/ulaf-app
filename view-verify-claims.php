@@ -39,6 +39,22 @@ if ($claimId && $userId) {
 
 $images = $claimDetails ? explode(',', $claimDetails['Proof_Image']) : [];
 $imagesItem = $claimDetails ? explode(',', $claimDetails['Image']) : [];
+
+
+$verificationStatus = htmlspecialchars($claimDetails['Verification_Status']);
+$claimId = htmlspecialchars($claimId); // Ensure $claimId is sanitized
+
+$pendingClaim = $approveClaim = $declinedClaim = false;
+
+if ($claimDetails) {
+	if ($verificationStatus === 'Pending') {
+		$pendingClaim = true;
+	} elseif ($verificationStatus === 'Approved') {
+		$approveClaim = true;
+	} elseif ($verificationStatus === 'Declined') {
+		$declinedClaim = true;
+	}
+}
 ?>
 
 <style>
@@ -174,22 +190,34 @@ $imagesItem = $claimDetails ? explode(',', $claimDetails['Image']) : [];
 						</div>
 					</div>
 
-					<div class="footer fixed bg-white">
-						<div class="container">
-							<div class="row">
-								<div class="col-1"></div>
-								<div class="col-4 px-0">
-									<button type="button" class="btn btn-danger btn-xs rounded-xl btn-thin w-100 gap-2" style="font-size: 13.5px !important" data-bs-toggle="modal" data-bs-target="#declineModal">Decline Claim</button>
-								</div>
-								<div class="col-2"></div>
-								<div class="col-4 px-0">
-									<button type="button" class="btn btn-success btn-xs rounded-xl btn-thin w-100 gap-2" style="font-size: 13.5px !important" data-bs-toggle="modal" data-bs-target="#approveModal">Approve Claim</button>
-								</div>
-
+					<?php if ($declinedClaim) : ?>
+						<div class="footer fixed bg-white">
+							<div class="container">
+								<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Declined : Claim Closed</button>
 							</div>
 						</div>
-
-					</div>
+					<?php elseif ($approveClaim) : ?>
+						<div class="footer fixed bg-white">
+							<div class="container">
+								<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="location.href='view-message.php?claim_id=<?php echo $claimId; ?>'">Message Now</button>
+							</div>
+						</div>
+					<?php elseif ($pendingClaim) : ?>
+						<div class="footer fixed bg-white">
+							<div class="container">
+								<div class="row">
+									<div class="col-1"></div>
+									<div class="col-4 px-0">
+										<button type="button" class="btn btn-danger btn-xs rounded-xl btn-thin w-100 gap-2" style="font-size: 13.5px !important" data-bs-toggle="modal" data-bs-target="#declineModal">Decline Claim</button>
+									</div>
+									<div class="col-2"></div>
+									<div class="col-4 px-0">
+										<button type="button" class="btn btn-success btn-xs rounded-xl btn-thin w-100 gap-2" style="font-size: 13.5px !important" data-bs-toggle="modal" data-bs-target="#approveModal">Approve Claim</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
 
 				<?php else : ?>
 					<p>Item not found or you do not have permission to view this item.</p>
@@ -232,6 +260,7 @@ $imagesItem = $claimDetails ? explode(',', $claimDetails['Image']) : [];
 					</div>
 					<div class="modal-body">
 						<p>Are you sure you want to approve claim # <?php echo $claimId; ?>?</p>
+						<p>Approving this claim will grant the user access to your contact details and social links. They will also be able to message you directly through this app.</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -240,6 +269,7 @@ $imagesItem = $claimDetails ? explode(',', $claimDetails['Image']) : [];
 				</div>
 			</div>
 		</div>
+
 
 		<!-- Modal for alerts -->
 		<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalCenterTitle" aria-hidden="true">

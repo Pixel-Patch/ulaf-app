@@ -106,7 +106,7 @@ if ($stmt = $conn->prepare($postsQuery)) {
 					<!-- Featured Beverages -->
 					<div class="tab-content">
 						<div class="tab-pane fade active show" id="home" role="tabpanel">
-							<ul class="featured-list">
+							<ul class="featured-list" style="margin-bottom: 18%;">
 								<div class="row g-3">
 									<?php foreach ($myclaims as $item) :
 										// Handle multiple images by taking the first one
@@ -147,7 +147,7 @@ if ($stmt = $conn->prepare($postsQuery)) {
 							</ul>
 						</div>
 						<div class="tab-pane fade" id="profile" role="tabpanel">
-							<ul class="featured-list">
+							<ul class="featured-list" style="margin-bottom: 18%;">
 								<div class="row g-3">
 									<?php foreach ($mypost as $item) :
 										// Handle multiple images by taking the first one

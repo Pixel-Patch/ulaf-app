@@ -7,22 +7,25 @@ if (isset($_GET['claimId'])) {
 	$verificationDate = new DateTime("now", new DateTimeZone('Asia/Manila'));
 	$formattedDate = $verificationDate->format('Y-m-d H:i:s');
 
-	$sql = "UPDATE claims SET 
-                Verification_Status = ?, 
-                Verification_Date = ? 
+	$sql = "UPDATE claims SET
+                Verification_Status = ?,
+                Verification_Date = ?
             WHERE Claim_ID = ?";
 
 	if ($stmt = $conn->prepare($sql)) {
 		$stmt->bind_param('ssi', $status, $formattedDate, $claimId);
 		if ($stmt->execute()) {
-			echo "Claim declined successfully.";
+			echo "<script>showSuccessModal('Claim approved successfully.');</script>";
+			echo "<script>setTimeout(() => {
+                        window.location.href = 'view-verify-claims.php?claim_id=$claimId';
+                    }, 2000);</script>";
 		} else {
-			echo "Error executing query: " . $stmt->error;
+			echo "<script>showErrorModal('Error executing query: " . $stmt->error . "');</script>";
 		}
 		$stmt->close();
 	} else {
-		echo "Error preparing statement: " . $conn->error;
+		echo "<script>showErrorModal('Error preparing statement: " . $conn->error . "');</script>";
 	}
 } else {
-	echo "No claim ID provided.";
+	echo "<script>showWarningModal('No claim ID provided.');</script>";
 }

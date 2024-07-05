@@ -232,13 +232,6 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 
 
 
-	<div class="footer fixed bg-white">
-		<div class="container">
-			<a href="view-my-post-claims.php?item_id=<?php echo $itemId; ?>" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">View My Post Claims</a>
-		</div>
-	</div>
-
-
 
 	<!-- Claim Submitted Modal -->
 	<div class="modal fade" id="claimSubmittedModal">

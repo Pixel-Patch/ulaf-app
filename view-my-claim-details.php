@@ -29,11 +29,14 @@ if ($claimId && $userId) {
 		$claimDetails = $result->fetch_assoc();
 		$stmt->close();
 	}
-
+	
+	$images = explode(',',
+		$claimDetails['Proof_Image']
+	);
+	$imagesItem = explode(',', $claimDetails['Image']);
 
 	if ($claimDetails) {
-		$images = explode(',', $claimDetails['Proof_Image']);
-		$imagesItem = explode(',', $claimDetails['Image']);
+		
 		if ($claimDetails['Verification_Status'] === 'Pending') {
 			$pendingClaim = true;
 		} elseif ($claimDetails['Verification_Status'] === 'Approved') {
