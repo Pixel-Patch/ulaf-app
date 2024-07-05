@@ -78,7 +78,7 @@
 			</a>
 		</li>
 		<li>
-			<a class="nav-link" href="user-profile.php">
+			<a class="nav-link" href="view-user-profile.php">
 				<span class="dz-icon">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g clip-path="url(#clip0_329_300)">

@@ -184,7 +184,7 @@ var OmbeUiSlider = function(){
 					min: 0,
 					max: 100
 				},
-				start: [66],
+				start: [1],
 				pips: {
 					mode: 'values',
 					values: [0, 33, 66, 100],
@@ -206,7 +206,7 @@ var OmbeUiSlider = function(){
 			}
 
 			var activePips = [null, null];
-			var pipSeries = ['Small','Medium','Large','Extra Large']
+			var pipSeries = ['Claiming','Claimed','Retreiving','Retrieved']
 			pips.forEach(function(pip, index) {
 				var label = document.createElement('span');
 				label.className = 'slider-label';

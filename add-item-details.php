@@ -15,44 +15,44 @@ require("header.php");
 
 <!-- Custom CSS for Select2 -->
 <style>
-	#map-add {
-		height: 300px;
-		width: 100%;
-	}
+    #map-add {
+        height: 300px;
+        width: 100%;
+    }
 
-	.select2-container .select2-results__option--highlighted[aria-selected] {
-		background-color: #8FCCA7 !important;
-	}
+    .select2-container .select2-results__option--highlighted[aria-selected] {
+        background-color: #8FCCA7 !important;
+    }
 
-	.select2-container--default .select2-results__option {
-		height: 40px;
-		line-height: 30px;
-	}
+    .select2-container--default .select2-results__option {
+        height: 40px;
+        line-height: 30px;
+    }
 
-	.select2-container--default .select2-selection--single {
-		height: 40px;
-		line-height: 40px;
-	}
+    .select2-container--default .select2-selection--single {
+        height: 40px;
+        line-height: 40px;
+    }
 
-	.select2-container--default .select2-selection--single .select2-selection__rendered {
-		line-height: 40px;
-	}
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 40px;
+    }
 
-	.preview-container {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
+    .preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 
-	.preview-container img {
-		max-width: 200px;
-		max-height: 200px;
-		object-fit: cover;
-		border: 2px solid #ddd;
-		border-radius: 5px;
-		padding: 5px;
-		background: #fff;
-	}
+    .preview-container img {
+        max-width: 200px;
+        max-height: 200px;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+        background: #fff;
+    }
 </style>
 
 </head>
@@ -136,12 +136,14 @@ require("header.php");
                         <label class="form-label" for="addDescription">Description</label>
                         <textarea id="addDescription" class="form-control" name="addDescription" aria-label=" "></textarea>
                     </div>
-                    <div class="footer-fixed-btn bottom-0 bg-white">
+                    <br>
+                    <div class="  bottom-0 bg-white">
                         <a href="javascript:void(0);" type="submit" class="btn btn-lg btn-thin btn-primary w-100 rounded-xl" onclick="submitItemDetails()" id="submitButton">Submit</a>
                     </div>
                 </form>
             </div>
         </main>
+
 
         <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -150,6 +152,10 @@ require("header.php");
                 </div>
             </div>
         </div>
+        <!-- Menubar -->
+        <?php include('menubar.php'); ?>
+        <!-- Menubar -->
+
 
         <script src="assets/js/jquery.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -161,7 +167,7 @@ require("header.php");
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="assets/js/select2.js"></script>
         <script src="assets/js/pin-maps.js"></script>
-      
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const filterRadios = document.querySelectorAll('input[name="addType"]');
@@ -212,7 +218,7 @@ require("header.php");
                 formData.append('latitude', latitude);
                 formData.append('longitude', longitude);
                 formData.append('addPinLocation', addPinLocation);
- 
+
                 document.getElementById('preloader').style.display = 'block';
                 $.ajax({
                     url: 'submit-item-details.php',

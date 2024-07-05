@@ -255,7 +255,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="user-profile.php" class="item-content item-link">
+							<a href="view-user-profile.php" class="item-content item-link">
 								<div class="dz-icon icon-md icon-fill">
 									<i class="feather icon-user text-dark"></i>
 								</div>

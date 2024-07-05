@@ -61,6 +61,8 @@ if (isset($_SESSION['registration_incomplete']) && $_SESSION['registration_incom
 	<!-- Global CSS -->
 	<link href="assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
+
+	<link rel="stylesheet" href="assets/vendor/nouislider/nouislider.min.css">
 	<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
 
 	<!-- Stylesheets -->

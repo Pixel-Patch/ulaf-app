@@ -2,12 +2,12 @@
 
 $title = "ULAF - Home | PixelPatch";
 require("header.php");
-require("fetch-user-data.php"); // Include the fetch-user-data script
+require("fetch-data.php"); // Include the fetch-user-data script
 $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 ?>
 
 </head>
- 
+
 
 <body>
 	<div class="page-wrapper">
@@ -86,7 +86,7 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 
 		<!-- Footer Fixed Button -->
 		<div class="footer-fixed-btn bottom-0 bg-white">
-			<a href="user-profile.php" class="btn btn-lg btn-thin btn-primary rounded-xl w-100">Update Profile</a>
+			<a href="view-user-profile.php" class="btn btn-lg btn-thin btn-primary rounded-xl w-100">Update Profile</a>
 		</div>
 		<!-- Footer Fixed Button -->
 	</div>

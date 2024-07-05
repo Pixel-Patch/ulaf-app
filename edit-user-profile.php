@@ -2,8 +2,8 @@
 
 $title = "ULAF - Home | PixelPatch";
 require("header.php");
-require("fetch-user-data.php"); // Include the fetch-user-data script
-$userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
+require("fetch-data.php"); // Include the fetch-user-data script
+$userData = $_SESSION['user_data'] ?? []; 
 ?>
 
 </head>
@@ -205,7 +205,7 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 					new bootstrap.Modal(document.getElementById('alertModal')).show();
 					if (data.status === 'success' && data.redirect) {
 						setTimeout(() => {
-							window.location.href = 'user-profile.php';
+							window.location.href = 'view-user-profile.php';
 						}, 2000);
 					}
 				},

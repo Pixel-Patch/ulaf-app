@@ -66,7 +66,7 @@ window.addEventListener("load", () => {
   initMap("map-add", "addpinlocation", "pin-latitude-add", "pin-longitude-add");
   initMap(
     "map-edit",
-    "search-box-edit",
+    "editpinlocation",
     "pin-latitude-edit",
     "pin-longitude-edit"
   );

@@ -4,84 +4,79 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Image Background Removal</title>
+	<title>Progress Bar</title>
+	<link rel="stylesheet" href="styles.css">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.progress-container {
+			text-align: center;
+		}
+
+		.progress {
+			width: 300px;
+			height: 8px;
+			background-color: #e0e0e0;
+			border-radius: 4px;
+			position: relative;
+			margin-bottom: 20px;
+		}
+
+		.progress-bar {
+			width: 50%;
+			/* Adjust this value to represent the progress */
+			height: 100%;
+			background-color: #007b55;
+			border-radius: 4px;
+			position: relative;
+		}
+
+		.progress-circle {
+			width: 16px;
+			height: 16px;
+			background-color: #007b55;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translate(50%, -50%);
+			border: 4px solid #e0e0e0;
+		}
+
+		.labels {
+			display: flex;
+			justify-content: space-between;
+			width: 300px;
+		}
+
+		.labels span {
+			font-size: 14px;
+			color: #666;
+		}
+	</style>
 </head>
 
 <body>
-	<input type="file" id="addclsuidimage" accept="image/*">
-	<img id="preview" style="display: none;">
-	<script>
-		document
-			.getElementById("addclsuidimage")
-			.addEventListener("change", function(event) {
-				const file = event.target.files[0];
-				if (file) {
-					const reader = new FileReader();
-					reader.onload = function(e) {
-						const preview = document.getElementById("preview");
-						preview.src = e.target.result;
-						preview.style.display = "block";
-					};
-					reader.readAsDataURL(file);
-				}
-			});
-
-		const apiKey = "JTXcqeR33CuBYr2ZfGH1WpYX";
-
-		document
-			.getElementById("addclsuidimage")
-			.addEventListener("change", async function(event) {
-				const file = event.target.files[0];
-				const formData = new FormData();
-				formData.append("image_file", file);
-
-				try {
-					const response = await fetch("https://api.remove.bg/v1.0/removebg", {
-						method: "POST",
-						headers: {
-							"X-Api-Key": apiKey,
-						},
-						body: formData,
-					});
-
-					if (!response.ok) {
-						throw new Error("Failed to remove background");
-					}
-
-					const result = await response.blob();
-					const imageUrl = URL.createObjectURL(result);
-
-					const previewImage = document.getElementById("preview");
-					previewImage.src = imageUrl;
-					previewImage.style.display = "block";
-
-					uploadImage(result);
-				} catch (error) {
-					console.error("Error removing background:", error);
-				}
-			});
-
-		async function uploadImage(imageBlob) {
-			const formData = new FormData();
-			formData.append("file", imageBlob, "removed-bg.png");
-
-			try {
-				const response = await fetch("submit-user-details.php", {
-					method: "POST",
-					body: formData,
-				});
-
-				if (!response.ok) {
-					throw new Error("Failed to upload image");
-				}
-
-				const result = await response.json();
-				console.log("Image uploaded successfully:", result);
-			} catch (error) {
-				console.error("Error uploading image:", error);
-			}
-		}
-	</script>
+	<div class="progress-container">
+		<div class="progress">
+			<div class="progress-bar">
+				<div class="progress-circle"></div>
+			</div>
+		</div>
+		<div class="labels">
+			<span>Claiming</span>
+			<span>Claimed</span>
+			<span>Retrieving</span>
+			<span>Retrieved</span>
+		</div>
+	</div>
 </body>
 
 </html>

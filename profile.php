@@ -173,23 +173,9 @@
 		<!-- Main Content End -->
 
 		<!-- Menubar -->
-		<div class="menubar-area footer-fixed">
-			<div class="toolbar-inner menubar-nav">
-				<a href="index.php" class="nav-link">
-					<i class="fi fi-rr-home"></i>
-				</a>
-				<a href="wishlist.php" class="nav-link">
-					<i class="fi fi-rr-heart"></i>
-				</a>
-				<a href="cart.php" class="nav-link">
-					<i class="fi fi-rr-shopping-cart"></i>
-				</a>
-				<a href="user-profile.php" class="nav-link active">
-					<i class="fi fi-rr-user"></i>
-				</a>
-			</div>
-		</div>
+		<?php include('menubar.php'); ?>
 		<!-- Menubar -->
+
 	</div>
 	<!--**********************************
     Scripts

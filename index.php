@@ -2,9 +2,82 @@
 $title = "ULAF - Home | PixelPatch";
 
 require("header.php");
-require("fetch-user-data.php");
+require("fetch-data.php");
 
 $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
+
+// Fetch recently added 10 items
+$recentItemsQuery = "SELECT items.*, categories.Category_Name 
+                     FROM items 
+                     LEFT JOIN categories ON items.Category_ID = categories.Category_ID 
+                     ORDER BY items.Posted_Date DESC 
+                     LIMIT 10";
+
+$recentItems = [];
+if ($stmt = $conn->prepare($recentItemsQuery)) {
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	while ($row = $result->fetch_assoc()) {
+		$recentItems[] = $row;
+	}
+}
+
+// Fetch categories with the count of items
+$categoriesQuery = "
+    SELECT categories.*, COUNT(items.Category_ID) as ItemCount
+    FROM categories
+    LEFT JOIN items ON categories.Category_ID = items.Category_ID
+    GROUP BY categories.Category_ID";
+
+$categories = [];
+if ($stmt = $conn->prepare($categoriesQuery)) {
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	while ($row = $result->fetch_assoc()) {
+		$categories[] = $row;
+	}
+}
+
+// Fetch items posted in the last 7 days
+$last7DaysQuery = "
+    SELECT items.*, categories.Category_Name 
+    FROM items 
+    LEFT JOIN categories ON items.Category_ID = categories.Category_ID 
+    WHERE items.Posted_Date >= DATE_SUB(NOW(), INTERVAL 7 DAY) 
+    AND items.Item_Status = 'Posted'
+    ORDER BY items.Posted_Date DESC";
+
+$last7DaysItems = [];
+if ($stmt = $conn->prepare($last7DaysQuery)) {
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	while ($row = $result->fetch_assoc()) {
+		$last7DaysItems[] = $row;
+	}
+}
+
+// Fetch the 10 oldest "Posted" items
+$oldestItemsQuery = "
+    SELECT items.*, categories.Category_Name 
+    FROM items 
+    LEFT JOIN categories ON items.Category_ID = categories.Category_ID 
+    WHERE items.Item_Status = 'Posted'
+    ORDER BY items.Posted_Date ASC 
+    LIMIT 5";
+
+$oldestItems = [];
+if ($stmt = $conn->prepare($oldestItemsQuery)) {
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	while ($row = $result->fetch_assoc()) {
+		$oldestItems[] = $row;
+	}
+}
+
 ?>
 
 
@@ -43,6 +116,20 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 		-webkit-line-clamp: 3;
 		/* Number of lines to show */
 		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.responsive-image {
+		max-height: 125px;
+		max-width: 150px;
+		object-fit: cover;
+	}
+
+	.description {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
@@ -108,7 +195,6 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 					</div>
 					<!-- SearchBox -->
 
-
 					<!-- Overlay Card -->
 					<div class="swiper overlay-swiper1" style="padding-top: 20px;">
 						<div class="title-bar mb-0">
@@ -117,130 +203,40 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 						</div>
 
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-success">Found</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-danger">Lost</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
+							<?php foreach ($recentItems as $item) :
+								// Handle multiple images by taking the first one
+								$images = explode(',', $item['Image']);
+								$firstImage = trim($images[0]);
+							?>
+								<div class="swiper-slide">
+									<div class="dz-card-overlay style-1" style="border-radius: 50px;">
+										<div class="dz-media">
+											<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>">
+												<img src="assets/uploads/items/<?php echo $firstImage; ?>" alt="image">
+											</a>
+										</div>
+										<div class="dz-info">
+											<h6 class="title">
+												<span class="badge badge-<?php echo ($item['Type'] == 'found') ? 'success' : 'danger'; ?>">
+													<?php echo $item['Type']; ?>
+												</span><br>
+												<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>">
+													<?php echo $item['Item_Name']; ?>
+												</a>
+											</h6>
+											<ul class="dz-meta">
+												<li class="dz-price">
+													<del class="no-line"><?php echo $item['Category_Name']; ?></del>
+												</li>
+											</ul>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-success">Found</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-danger">Lost</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-success">Found</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-									<div class="dz-media">
-										<a href="product-detail.php">
-											<img src="assets/images/featured/facecream.jpg" alt="image">
-										</a>
-									</div>
-									<div class="dz-info">
-										<h6 class="title">
-											<span class="badge badge-danger">Lost</span><br>
-											<a href="product-detail.php">Face Cream</a>
-										</h6>
-										<ul class="dz-meta">
-											<li class="dz-price">
-												<del class="no-line">Categories</del>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
+							<?php endforeach; ?>
 						</div>
-
 					</div>
 					<!-- Overlay Card -->
+
 
 					<!-- Categories Swiper -->
 					<div class="title-bar mb-0">
@@ -248,115 +244,48 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 					</div>
 					<div class="swiper categories-swiper dz-swiper m-b20">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="electronics.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M20 17.722c.595-.347 1-.985 1-1.722V5c0-1.103-.897-2-2-2H5c-1.103 0-2 .897-2 2v11c0 .736.405 1.375 1 1.722V18H2v2h20v-2h-2v-.278zM5 16V5h14l.002 11H5z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="electronics.php">Electronics</a></h6>
-										<span class="menus text-primary">67 Items</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="personal-items.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M16 12h2v4h-2z"></path>
-												<path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM5 5h13v2H5a1.001 1.001 0 0 1 0-2zm15 14H5.012C4.55 18.988 4 18.805 4 18V8.815c.314.113.647.185 1 .185h15v10z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="personal-items.php">Personal Items</a></h6>
-										<span class="menus text-primary">25 Items</span>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="clothing-shoes.php">
-											<i class="fa-regular fa-shirt" style="font-size:20px; margin-top:3px"></i>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="clothing-shoes.php">Clothing & Shoes</a></h6>
-										<span class="menus text-primary">43 Items</span>
+							<?php
+							$icons = [
+								'electronics' => 'fa-tv',
+								'musical-instruments' => 'fa-music',
+								'toys' => 'fa-puzzle-piece',
+								'documents' => 'fa-file-alt',
+								'cameras' => 'fa-camera',
+								'wallets' => 'fa-wallet',
+								'headphones' => 'fa-headphones',
+								'school-supplies' => 'fa-pencil-ruler',
+								'miscellaneous' => 'fa-box',
+								'clothing' => 'fa-shirt',
+								'books' => 'fa-book',
+								'keys' => 'fa-key',
+								'bags' => 'fa-briefcase',
+								'water-bottles' => 'fa-water',
+								'glasses' => 'fa-glasses',
+								'umbrellas' => 'fa-umbrella',
+								'sports-equipment' => 'fa-football-ball'
+							];
+							foreach ($categories as $category) :
+								$categoryName = strtolower(str_replace(' ', '-', $category['Category_Name']));
+								$iconClass = isset($icons[$categoryName]) ? $icons[$categoryName] : 'fa-box';
+							?>
+								<div class="swiper-slide">
+									<div class="dz-categories-bx">
+										<div class="icon-bx">
+											<a href="cat-<?php echo $categoryName; ?>.php">
+												<i style="font-size: 24px;" class="fa-regular <?php echo $iconClass; ?>"></i>
+											</a>
+										</div>
+										<div class="dz-content">
+											<h6 class="title"><a href="cat-<?php echo $categoryName; ?>.php"><?php echo $category['Category_Name']; ?></a></h6>
+											<span class="menus text-primary"><?php echo $category['ItemCount']; ?> Items</span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="books-stationery.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M21 3h-7a2.98 2.98 0 0 0-2 .78A2.98 2.98 0 0 0 10 3H3a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h5.758a2.01 2.01 0 0 1 1.414.586l1.121 1.121c.009.009.021.012.03.021.086.08.182.15.294.196h.002a.996.996 0 0 0 .762 0h.002c.112-.046.208-.117.294-.196.009-.009.021-.012.03-.021l1.121-1.121A2.01 2.01 0 0 1 15.242 20H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 15h-4.758a4.03 4.03 0 0 0-2.242.689V6c0-.551.448-1 1-1h6v13z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="books-stationery.php">Books and Stationery</a></h6>
-										<span class="menus text-primary">32 Items</span>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="flasks-accessories.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M12 22c4.636 0 8-3.468 8-8.246C20 7.522 12.882 2.4 12.579 2.185a1 1 0 0 0-1.156-.001C11.12 2.397 4 7.503 4 13.75 4 18.53 7.364 22 12 22zm-.001-17.74C13.604 5.55 18 9.474 18 13.754 18 17.432 15.532 20 12 20s-6-2.57-6-6.25c0-4.29 4.394-8.203 5.999-9.49z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="flasks-accessories.php">Flasks & Accessories</a></h6>
-										<span class="menus text-primary">18 Items</span>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="bags-backpacks.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M4 20h2V10a1 1 0 0 1 1-1h12V7a1 1 0 0 0-1-1h-3.051c-.252-2.244-2.139-4-4.449-4S6.303 3.756 6.051 6H3a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2zm6.5-16c1.207 0 2.218.86 2.45 2h-4.9c.232-1.14 1.243-2 2.45-2z"></path>
-												<path d="M21 11H9a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a1 1 0 0 0-1-1zm-6 7c-2.757 0-5-2.243-5-5h2c0 1.654 1.346 3 3 3s3-1.346 3-3h2c0 2.757-2.243 5-5 5z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="bags-backpacks.php">Bags and Backpacks</a></h6>
-										<span class="menus text-primary">56 Items</span>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-categories-bx">
-									<div class="icon-bx">
-										<a href="miscellaneous.php">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-												<path d="M7 22a4.965 4.965 0 0 0 3.535-1.465l9.193-9.193.707.708 1.414-1.414-8.485-8.486-1.414 1.414.708.707-9.193 9.193C2.521 14.408 2 15.664 2 17s.521 2.592 1.465 3.535A4.965 4.965 0 0 0 7 22zM18.314 9.928 15.242 13H6.758l7.314-7.314 4.242 4.242z"></path>
-											</svg>
-										</a>
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="miscellaneous.php">Miscellaneous</a></h6>
-										<span class="menus text-primary">29 Items</span>
-									</div>
-								</div>
-							</div>
+							<?php endforeach; ?>
 						</div>
 					</div>
 					<!-- Categories Swiper -->
+
 
 
 					<!-- Last 7 days Overlay Card -->
@@ -365,86 +294,45 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 						<a href="items.php">load more</a>
 					</div>
 					<div class="swiper overlay-swiper2" style="padding-top: 25px;">
-
-
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-success">Found</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
+							<?php foreach ($last7DaysItems as $item) :
+								// Handle multiple images by taking the first one
+								$images = explode(',', $item['Image']);
+								$firstImage = trim($images[0]);
+							?>
+								<div class="swiper-slide">
+									<div class="dz-wishlist-bx">
+										<div class="dz-media">
+											<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>">
+												<img src="assets/uploads/items/<?php echo $firstImage; ?>" alt="image" class="responsive-image">
+											</a>
+										</div>
+										<div class="dz-info">
+											<div class="dz-head">
+												<h6 class="title"><a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
+												<span class="badge badge-<?php echo ($item['Type'] == 'Found') ? 'success' : 'danger'; ?>"><?php echo $item['Type']; ?></span>
+												<span class="badge light badge-light"><?php echo $item['Posted_Date']; ?></span>
+												<p class="description">
+													<?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?>
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-danger">Lost</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-success">Found</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-danger">Lost</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
-										</div>
-									</div>
-								</div>
-							</div>
+							<?php endforeach; ?>
 						</div>
-
 					</div>
 					<!-- Overlay Card -->
 
-					<!-- Featured Beverages -->
+
+					<!-- Featured Items -->
 					<div class="accordion-item accordion-primary">
-						<div class="accordion-header  " id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" aria-expanded="true" role="button">
+						<div class="accordion-header" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" aria-expanded="true" role="button">
 							<span class="accordion-header-icon"></span>
 							<span class="accordion-header-text">Unclaimed Found Items</span>
 							<span class="accordion-header-indicator"></span>
 						</div>
-						<div id="collapseOne" class="collapse  " aria-labelledby="headingOne" data-bs-parent="#accordion-one">
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion-one">
 							<div class="accordion-body-text">
 								Attention: Unclaimed items in the lost and found will be donated or recycled at the end of the semester. Please check for any missing items and claim them before then. Go to USF Office for more details.
 							</div>
@@ -455,78 +343,50 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 
 					<ul class="featured-list">
 						<div class="row g-3">
-							<div class="col-12 col-sm-12">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-success">Found</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
+							<?php foreach ($oldestItems as $item) :
+								// Handle multiple images by taking the first one
+								$images = explode(',', $item['Image']);
+								$firstImage = trim($images[0]);
+							?>
+								<div class="col-12 col-sm-12">
+									<div class="dz-wishlist-bx">
+										<div class="dz-media">
+											<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><img src="assets/uploads/items/<?php echo $firstImage; ?>" alt="image" class="responsive-image"></a>
+										</div>
+										<div class="dz-info">
+											<div class="dz-head">
+												<h6 class="title"><a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
+												<span class="badge badge-success">Found</span>
+												<span class="badge light badge-light"><?php echo $item['Posted_Date']; ?></span>
+												<p class="description">
+													<?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?>
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-12 col-sm-12">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-success">Found</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghg hfghom left gfhfghfgh dfgfdgdfg dfgfdgdfg sdfbdgggsfbhdsbf
-												dsf
-												d
-												ffgdfg gdfgfdg gfdgfdgdf g dfg fdgfd gfdgdfgdfg
-												sdf
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 col-sm-12">
-								<div class="dz-wishlist-bx">
-									<div class="dz-media">
-										<a href="product-detail.php"><img src="assets/images/menus/pic1.jpg" alt=""></a>
-									</div>
-									<div class="dz-info">
-										<div class="dz-head">
-											<h6 class="title"><a href="product-detail.php">Apple Watch</a></h6>
-											<span class="badge badge-success">Found</span>
-											<span class="badge light badge-light">01-23-2024 09:35:45 </span>
-
-											<p>Have scatches in bottghghghfghom left
-										</div>
-									</div>
-								</div>
-							</div>
+							<?php endforeach; ?>
 						</div>
 					</ul>
 					<a href="unclaimed-found-item.php" class="btn mb-2 me-2 btn-block btn-secondary">Load More</a>
+					<!-- Featured Items -->
 
-					<!-- Featured Beverages -->
 				</div>
 
 			</main>
 			<!-- Main Content End -->
 
 			<!-- Menubar -->
+			<!-- Menubar -->
 			<div class="menubar-area footer-fixed">
 				<div class="toolbar-inner menubar-nav">
 					<a href="index.php" class="nav-link active">
 						<i class="fi fi-rr-home"></i>
 					</a>
-					<a href="cart.php" class="nav-link">
-						<i class="fi fi-rr-shopping-cart"></i>
+					<a href="view-my-lists.php" class="nav-link">
+						<i class="fa-regular fa-clipboard-list"></i>
 					</a>
-					<a href="user-profile.php" class="nav-link">
+					<a href="view-user-profile.php" class="nav-link">
 						<i class="fi fi-rr-user"></i>
 					</a>
 					<a href="add-item-details.php" class="nav-link">
@@ -535,6 +395,9 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 				</div>
 			</div>
 			<!-- Menubar -->
+			<!-- Menubar -->
+
+
 		</div>
 		<!-- Nav Floting End -->
 
