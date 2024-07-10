@@ -40,7 +40,6 @@ if ($claimId && $userId) {
 $images = $claimDetails ? explode(',', $claimDetails['Proof_Image']) : [];
 $imagesItem = $claimDetails ? explode(',', $claimDetails['Image']) : [];
 
-
 $verificationStatus = htmlspecialchars($claimDetails['Verification_Status']);
 $claimId = htmlspecialchars($claimId); // Ensure $claimId is sanitized
 
@@ -58,99 +57,25 @@ if ($claimDetails) {
 ?>
 
 <style>
-	.labels {
-		display: flex;
-		justify-content: space-between;
-		width: 110%;
-		margin: 2% -5%;
-	}
-
-	.labels span {
-		font-size: 14px;
-		color: #666;
-	}
-
-	.progress {
-		width: 100%;
-	}
-
-	.swiper {
-		margin-bottom: 100px !important;
-	}
-
-	.dz-product-detail {
-		margin-top: -122px;
-	}
-
-	.progress {
-		position: relative;
-		width: 100%;
-		height: 20px;
-		background-color: #f3f3f3;
-	}
-
-	.progress-bar {
-		height: 100%;
-		background-color: #007bff;
-	}
-
-	.labels {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 10px;
-	}
-
-	.labels span {
-		font-weight: normal;
-		color: gray;
-	}
-
-	.responsive-image {
-		max-height: 125px;
-		max-width: 150px;
-		object-fit: cover;
-	}
+	/* Your existing CSS styles */
 </style>
 </head>
 
 <body>
 	<div class="page-wrapper">
-		<!-- Preloader -->
-		<div id="preloader">
-			<div class="loader">
-				<div class="spinner-border text-primary" role="status">
-					<span class="visually-hidden">Loading...</span>
-				</div>
-			</div>
-		</div>
-		<!-- Preloader end-->
-
 		<!-- Header -->
 		<header class="header header-fixed transparent">
-			<div class="header-content">
-				<div class="left-content">
-					<a href="javascript:void(0);" class="back-btn">
-						<i class="feather icon-arrow-left"></i>
-					</a>
-				</div>
-				<div class="mid-content">
-					<h4 class="title">Verify Claim</h4>
-				</div>
-				<div class="right-content d-flex align-items-center gap-4">
-					<a href="javascript:void(0);" class="item-bookmark style-3">
-						<i class="far fa-bookmark"></i>
-						<i class="fas fa-bookmark"></i>
-					</a>
-				</div>
-			</div>
+			<!-- Your header content -->
 		</header>
-		<!-- Header -->
+		<!-- Header end-->
 
 		<!-- Main Content Start -->
 		<main class="page-content p-b80">
 			<div class="container p-0">
 				<?php if ($claimDetails) : ?>
+					<!-- Display item details -->
 					<div class="dz-product-preview bg-primary">
+						<!-- Swiper slider for item images -->
 						<div class="swiper product-detail-swiper">
 							<div class="swiper-wrapper">
 								<?php foreach ($imagesItem as $imageItem) : ?>
@@ -165,6 +90,7 @@ if ($claimDetails) {
 					</div>
 
 					<div class="dz-product-detail">
+						<!-- Item details section -->
 						<div class="dz-handle"></div>
 						<div class="detail-content">
 							<h4 class="title"><?php echo htmlspecialchars($claimDetails['Item_Name']); ?></h4>
@@ -172,7 +98,7 @@ if ($claimDetails) {
 						</div>
 						<div class="item-wrapper">
 							<div class="dz-meta-items">
-								<!-- Add more item details here if needed -->
+								<!-- Additional item details if needed -->
 							</div>
 							<div class="mb-3">
 								<label class="form-label" for="editDescription">Proof Description:</label>
@@ -190,7 +116,17 @@ if ($claimDetails) {
 						</div>
 					</div>
 
-					<?php if ($declinedClaim) : ?>
+					<?php
+					// Conditional footer based on Claim_Status
+					if ($claimDetails['Claim_Status'] === 'Returned' || $claimDetails['Claim_Status'] === 'Retrieved') :
+						$buttonText = ($claimDetails['Claim_Status'] === 'Returned') ? 'Item Returned' : 'Item Retrieved';
+					?>
+						<div class="footer fixed bg-white">
+							<div class="container">
+								<button type="button" class="btn btn-info btn-lg rounded-xl btn-thin w-100 gap-2"><?php echo $buttonText; ?></button>
+							</div>
+						</div>
+					<?php elseif ($declinedClaim) : ?>
 						<div class="footer fixed bg-white">
 							<div class="container">
 								<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Declined : Claim Closed</button>
@@ -226,7 +162,7 @@ if ($claimDetails) {
 		</main>
 		<!-- Main Content End -->
 
-
+		<!-- Modals for Decline and Approve -->
 		<!-- Decline Claim Modal -->
 		<div class="modal fade" id="declineModal">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -248,6 +184,10 @@ if ($claimDetails) {
 			</div>
 		</div>
 
+
+
+		<!-- Your existing modals for decline and approve -->
+
 		<!-- Approve Claim Modal -->
 		<div class="modal fade" id="approveModal">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -260,7 +200,6 @@ if ($claimDetails) {
 					</div>
 					<div class="modal-body">
 						<p>Are you sure you want to approve claim # <?php echo $claimId; ?>?</p>
-						<p>Approving this claim will grant the user access to your contact details and social links. They will also be able to message you directly through this app.</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -269,7 +208,6 @@ if ($claimDetails) {
 				</div>
 			</div>
 		</div>
-
 
 		<!-- Modal for alerts -->
 		<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalCenterTitle" aria-hidden="true">

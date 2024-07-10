@@ -2,9 +2,24 @@
 $title = "ULAF - Home | PixelPatch";
 
 require("header.php");
-require("fetch-data.php");
+require("fetch-userid.php");
 
 $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
+
+function fetchData($conn, $query)
+{
+	$data = [];
+	if ($stmt = $conn->prepare($query)) {
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+	} else {
+		error_log("Database Query Error: " . $conn->error);
+	}
+	return $data;
+}
 
 // Fetch recently added 10 items
 $recentItemsQuery = "SELECT items.*, categories.Category_Name 
@@ -12,16 +27,7 @@ $recentItemsQuery = "SELECT items.*, categories.Category_Name
                      LEFT JOIN categories ON items.Category_ID = categories.Category_ID 
                      ORDER BY items.Posted_Date DESC 
                      LIMIT 10";
-
-$recentItems = [];
-if ($stmt = $conn->prepare($recentItemsQuery)) {
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	while ($row = $result->fetch_assoc()) {
-		$recentItems[] = $row;
-	}
-}
+$recentItems = fetchData($conn, $recentItemsQuery);
 
 // Fetch categories with the count of items
 $categoriesQuery = "
@@ -29,16 +35,7 @@ $categoriesQuery = "
     FROM categories
     LEFT JOIN items ON categories.Category_ID = items.Category_ID
     GROUP BY categories.Category_ID";
-
-$categories = [];
-if ($stmt = $conn->prepare($categoriesQuery)) {
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	while ($row = $result->fetch_assoc()) {
-		$categories[] = $row;
-	}
-}
+$categories = fetchData($conn, $categoriesQuery);
 
 // Fetch items posted in the last 7 days
 $last7DaysQuery = "
@@ -48,16 +45,7 @@ $last7DaysQuery = "
     WHERE items.Posted_Date >= DATE_SUB(NOW(), INTERVAL 7 DAY) 
     AND items.Item_Status = 'Posted'
     ORDER BY items.Posted_Date DESC";
-
-$last7DaysItems = [];
-if ($stmt = $conn->prepare($last7DaysQuery)) {
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	while ($row = $result->fetch_assoc()) {
-		$last7DaysItems[] = $row;
-	}
-}
+$last7DaysItems = fetchData($conn, $last7DaysQuery);
 
 // Fetch the 10 oldest "Posted" items
 $oldestItemsQuery = "
@@ -67,20 +55,9 @@ $oldestItemsQuery = "
     WHERE items.Item_Status = 'Posted'
     ORDER BY items.Posted_Date ASC 
     LIMIT 5";
-
-$oldestItems = [];
-if ($stmt = $conn->prepare($oldestItemsQuery)) {
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	while ($row = $result->fetch_assoc()) {
-		$oldestItems[] = $row;
-	}
-}
+$oldestItems = fetchData($conn, $oldestItemsQuery);
 
 ?>
-
-
 
 <style>
 	del {
@@ -114,7 +91,6 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 	.truncated {
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
-		/* Number of lines to show */
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -133,30 +109,30 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	.item-name {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		display: inline-block;
+		max-width: 100%;
+	}
 </style>
 
 </head>
 
 <body>
 	<div class="page-wrapper">
-
-		<!-- Preloader -->
 		<?php include "pre-loader.php"; ?>
-		<!-- Preloader end-->
-
-		<!-- Sidebar -->
 		<?php include("sidebar.php"); ?>
-		<!-- Sidebar End -->
 
-		<!-- Nav Floting Start -->
 		<div class="dz-nav-floting">
-			<!-- Header -->
 			<header class="header py-2 mx-auto">
 				<div class="header-content">
 					<div class="left-content">
 						<div class="info">
 							<p class="text m-b10" id="greeting">Good Morning/Afternoon/Evening</p>
-							<h3 class="title"><?php echo htmlspecialchars($userData['Username'] ?? 'N/A'); ?></h3>
+							<h3 class="title"><?php echo $username ?? 'N/A'; ?></h3>
 						</div>
 					</div>
 					<div class="mid-content"></div>
@@ -177,25 +153,22 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 				</div>
 			</header>
 
-			<!-- Header -->
-
-			<!-- Main Content Start -->
 			<main class="page-content bg-white p-b60">
 				<div class="container">
-					<!-- SearchBox -->
 					<div class="search-box">
-						<div class="input-group input-radius input-rounded input-lg">
-							<input type="text" placeholder="Search beverages or foods" class="form-control">
-							<span class="input-group-text">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M9.65925 19.3102C11.8044 19.3103 13.8882 18.5946 15.5806 17.2764L21.9653 23.6612C22.4423 24.1218 23.2023 24.1086 23.663 23.6316C24.1123 23.1664 24.1123 22.4288 23.663 21.9635L17.2782 15.5788C20.5491 11.3682 19.7874 5.30333 15.5769 2.03243C11.3663 -1.23848 5.30149 -0.476799 2.03058 3.73374C-1.24033 7.94428 -0.478646 14.0092 3.73189 17.2801C5.42702 18.5969 7.51269 19.3113 9.65925 19.3102ZM4.52915 4.5273C7.36245 1.69394 11.9561 1.69389 14.7895 4.5272C17.6229 7.3605 17.6229 11.9542 14.7896 14.7876C11.9563 17.6209 7.36261 17.621 4.52925 14.7877C4.5292 14.7876 4.5292 14.7876 4.52915 14.7876C1.69584 11.9749 1.67915 7.39794 4.49181 4.56464C4.50424 4.55216 4.51667 4.53973 4.52915 4.5273Z" fill="#C9C9C9" />
-								</svg>
-							</span>
-						</div>
+						<form action="items-search.php" method="get">
+							<div class="input-group input-radius input-rounded input-lg">
+								<input type="text" name="search" placeholder="Search item..." class="form-control">
+								<button type="submit" class="input-group-text">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M9.65925 19.3102C11.8044 19.3103 13.8882 18.5946 15.5806 17.2764L21.9653 23.6612C22.4423 24.1218 23.2023 24.1086 23.663 23.6316C24.1123 23.1664 24.1123 22.4288 23.663 21.9635L17.2782 15.5788C20.5491 11.3682 19.7874 5.30333 15.5769 2.03243C11.3663 -1.23848 5.30149 -0.476799 2.03058 3.73374C-1.24033 7.94428 -0.478646 14.0092 3.73189 17.2801C5.42702 18.5969 7.51269 19.3113 9.65925 19.3102ZM4.52915 4.5273C7.36245 1.69394 11.9561 1.69389 14.7895 4.5272C17.6229 7.3605 17.6229 11.9542 14.7896 14.7876C11.9563 17.6209 7.36261 17.621 4.52925 14.7877C4.5292 14.7876 4.5292 14.7876 4.52915 14.7876C1.69584 11.9749 1.67915 7.39794 4.49181 4.56464C4.50424 4.55216 4.51667 4.53973 4.52915 4.5273Z" fill="#C9C9C9" />
+									</svg>
+								</button>
+							</div>
+						</form>
 					</div>
-					<!-- SearchBox -->
 
-					<!-- Overlay Card -->
+
 					<div class="swiper overlay-swiper1" style="padding-top: 20px;">
 						<div class="title-bar mb-0">
 							<h5 class="title">Recently Added</h5>
@@ -204,7 +177,6 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 
 						<div class="swiper-wrapper">
 							<?php foreach ($recentItems as $item) :
-								// Handle multiple images by taking the first one
 								$images = explode(',', $item['Image']);
 								$firstImage = trim($images[0]);
 							?>
@@ -220,7 +192,7 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 												<span class="badge badge-<?php echo ($item['Type'] == 'found') ? 'success' : 'danger'; ?>">
 													<?php echo $item['Type']; ?>
 												</span><br>
-												<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>">
+												<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>" class="item-name">
 													<?php echo $item['Item_Name']; ?>
 												</a>
 											</h6>
@@ -235,10 +207,7 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<!-- Overlay Card -->
 
-
-					<!-- Categories Swiper -->
 					<div class="title-bar mb-0">
 						<h5 class="title">Categories</h5>
 					</div>
@@ -284,11 +253,7 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<!-- Categories Swiper -->
 
-
-
-					<!-- Last 7 days Overlay Card -->
 					<div class="title-bar mb-0">
 						<h5 class="title">Last 7 days <br></h5>
 						<a href="items.php">load more</a>
@@ -296,7 +261,6 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 					<div class="swiper overlay-swiper2" style="padding-top: 25px;">
 						<div class="swiper-wrapper">
 							<?php foreach ($last7DaysItems as $item) :
-								// Handle multiple images by taking the first one
 								$images = explode(',', $item['Image']);
 								$firstImage = trim($images[0]);
 							?>
@@ -309,12 +273,10 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 										</div>
 										<div class="dz-info">
 											<div class="dz-head">
-												<h6 class="title"><a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
+												<h6 class="title item-name" style="padding-right:40%;"> <a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
 												<span class="badge badge-<?php echo ($item['Type'] == 'Found') ? 'success' : 'danger'; ?>"><?php echo $item['Type']; ?></span>
 												<span class="badge light badge-light"><?php echo $item['Posted_Date']; ?></span>
-												<p class="description">
-													<?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?>
-												</p>
+												<p class="description" style="padding-right:10%;"><?php echo $item['Description']; ?></p>
 											</div>
 										</div>
 									</div>
@@ -322,10 +284,7 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<!-- Overlay Card -->
 
-
-					<!-- Featured Items -->
 					<div class="accordion-item accordion-primary">
 						<div class="accordion-header" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" aria-expanded="true" role="button">
 							<span class="accordion-header-icon"></span>
@@ -344,7 +303,6 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 					<ul class="featured-list">
 						<div class="row g-3">
 							<?php foreach ($oldestItems as $item) :
-								// Handle multiple images by taking the first one
 								$images = explode(',', $item['Image']);
 								$firstImage = trim($images[0]);
 							?>
@@ -355,8 +313,8 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 										</div>
 										<div class="dz-info">
 											<div class="dz-head">
-												<h6 class="title"><a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
-												<span class="badge badge-success">Found</span>
+												<h6 class="title item-name"><a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>"><?php echo $item['Item_Name']; ?></a></h6>
+												<span class="badge badge-<?php echo ($item['Type'] == 'found') ? 'success' : 'danger'; ?>" style="margin-right: 100%;"><?php echo $item['Type']; ?></span>
 												<span class="badge light badge-light"><?php echo $item['Posted_Date']; ?></span>
 												<p class="description">
 													<?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?>
@@ -369,15 +327,9 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 						</div>
 					</ul>
 					<a href="unclaimed-found-item.php" class="btn mb-2 me-2 btn-block btn-secondary">Load More</a>
-					<!-- Featured Items -->
-
 				</div>
-
 			</main>
-			<!-- Main Content End -->
 
-			<!-- Menubar -->
-			<!-- Menubar -->
 			<div class="menubar-area footer-fixed">
 				<div class="toolbar-inner menubar-nav">
 					<a href="index.php" class="nav-link active">
@@ -394,14 +346,8 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 					</a>
 				</div>
 			</div>
-			<!-- Menubar -->
-			<!-- Menubar -->
-
-
 		</div>
-		<!-- Nav Floting End -->
 
-		<!-- Modal -->
 		<div class="modal fade dz-pwa-modal" id="pwaModal" tabindex="-1" aria-labelledby="pwaModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -418,12 +364,8 @@ if ($stmt = $conn->prepare($oldestItemsQuery)) {
 				</div>
 			</div>
 		</div>
-		<!-- PWA End -->
-
 	</div>
-	<!--**********************************
-Scripts
-***********************************-->
+
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -432,7 +374,6 @@ Scripts
 	<script src="assets/js/custom.js"></script>
 	<script src="index.js"></script>
 	<script>
-		// Calculate the current time in PHT (Philippine Time)
 		function getPhilippineTime() {
 			const now = new Date();
 			const utcOffset = now.getTimezoneOffset() * 60000;
@@ -456,7 +397,6 @@ Scripts
 			return greeting;
 		}
 
-		// Set the greeting and username dynamically
 		document.getElementById('greeting').innerText = getGreeting();
 		document.getElementById('username').innerText = username;
 	</script>

@@ -29,14 +29,15 @@ if ($claimId && $userId) {
 		$claimDetails = $result->fetch_assoc();
 		$stmt->close();
 	}
-	
-	$images = explode(',',
+
+	$images = explode(
+		',',
 		$claimDetails['Proof_Image']
 	);
 	$imagesItem = explode(',', $claimDetails['Image']);
 
 	if ($claimDetails) {
-		
+
 		if ($claimDetails['Verification_Status'] === 'Pending') {
 			$pendingClaim = true;
 		} elseif ($claimDetails['Verification_Status'] === 'Approved') {
@@ -75,7 +76,7 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 	}
 
 	.dz-product-detail {
-		margin-top: -122px;
+		margin-top: -132px;
 	}
 
 	.progress {
@@ -183,7 +184,7 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 							<div class="right-content d-flex align-items-center gap-4">
 								<a href="edit-item-details.php?item_id=<?php echo $itemId; ?>">
 									<svg enable-background="new 0 0 461.75 461.75" height="18" viewBox="0 0 461.75 461.75" width="18" xmlns="http://www.w3.org/2000/svg">
-										<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#4A3749"></path>
+										<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#808080"></path>
 									</svg>
 								</a>
 							</div>
@@ -242,9 +243,10 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 		<?php elseif ($approveClaim) : ?>
 			<div class="footer fixed bg-white">
 				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">Message Now</button>
+					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="location.href='view-message.php?claim_id=<?php echo $claimId; ?>'">Message Now</button>
 				</div>
 			</div>
+
 		<?php elseif ($declinedClaim) : ?>
 			<div class="footer fixed bg-white">
 				<div class="container">

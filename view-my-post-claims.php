@@ -56,7 +56,7 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 	}
 
 	.dz-product-detail {
-		margin-top: -122px;
+		margin-top: -132px;
 	}
 
 	#map {
@@ -158,49 +158,52 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 
 					<div class="dz-product-detail">
 						<div class="dz-handle"></div>
-						<a href="edit-item-details.php?item_id=<?php echo $itemId  ?>">
-							<div class="right-content d-flex align-items-center gap-4">
-								<svg enable-background="new 0 0 461.75 461.75" height="18" viewBox="0 0 461.75 461.75" width="18" xmlns="http://www.w3.org/2000/svg">
-									<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#808080"></path>
-								</svg>
-						</a>
-
+						<?php if ($itemDetails['Poster_ID'] == $userId && $itemDetails['Item_Status'] != 'Returned' && $itemDetails['Item_Status'] != 'Retrieved') : ?>
+							<a href="edit-item-details.php?item_id=<?php echo $itemId  ?>">
+								<div class="right-content d-flex align-items-center gap-4">
+									<svg enable-background="new 0 0 461.75 461.75" height="18" viewBox="0 0 461.75 461.75" width="18" xmlns="http://www.w3.org/2000/svg">
+										<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#808080"></path>
+									</svg>
+							</a>
 					</div>
-					<div class="detail-content">
-						<h4 class="title"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></h4>
-						<p><?php echo htmlspecialchars($itemDetails['Category_Name']); ?></p>
-						<label class="form-label" for="Item Status">Item Status :</label>
-						<span class="badge light badge-info" style="font-size: 18px;"><?php echo htmlspecialchars($itemDetails['Item_Status']); ?></span>
+				<?php endif; ?>
+				<div class="detail-content">
+					<h4 class="title"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></h4>
+					<p><?php echo htmlspecialchars($itemDetails['Category_Name']); ?></p>
+					<label class="form-label" for="Item Status">Item Status :</label>
+					<span class="badge light badge-info" style="font-size: 18px;"><?php echo htmlspecialchars($itemDetails['Item_Status']); ?></span>
 
+					<br>
+					<br>
+
+					<h3>Claims for this Item</h3>
+					<?php if (empty($itemClaims)) : ?>
+						<p class="no-claims-message">There are no claims for this item at the moment.</p>
+					<?php else : ?>
 						<br>
-						<br>
+						<ul class="featured-list">
+							<div class="row g-3">
+								<?php foreach ($itemClaims as $claim) : ?>
+									<div class="col-12 col-sm-12">
 
-						<h3>Claims for this Item</h3>
-						<?php if (empty($itemClaims)) : ?>
-							<p class="no-claims-message">There are no claims for this item at the moment.</p>
-						<?php else : ?>
-							<br>
-							<ul class="featured-list">
-								<div class="row g-3">
-									<?php foreach ($itemClaims as $claim) : ?>
-										<div class="col-12 col-sm-12">
-											<div class="dz-wishlist-bx">
-												<div class="dz-media">
-													<a href="view-verify-claims.php?claim_id=<?php echo $claim['Claim_ID']; ?>" style="display: flex; align-items: center; justify-content: center; height: 100px;">
-														<?php if (!empty($claim['Proof_Image'])) : ?>
-															<img src="assets/uploads/proofs/<?php echo htmlspecialchars($claim['Proof_Image']); ?>" alt="Proof Image" class="responsive-image">
-														<?php else : ?>
-															<p style="margin: 0;">No Image Available</p>
-														<?php endif; ?>
-													</a>
+										<div class="dz-wishlist-bx">
+											<div class="dz-media">
+												<a href="view-verify-claims.php?claim_id=<?php echo $claim['Claim_ID']; ?>" style="display: flex; align-items: center; justify-content: center; height: 100px;">
+													<?php if (!empty($claim['Proof_Image'])) : ?>
+														<img src="assets/uploads/proofs/<?php echo htmlspecialchars($claim['Proof_Image']); ?>" alt="Proof Image" class="responsive-image">
+													<?php else : ?>
+														<p style="margin: 0;">No Image Available</p>
+													<?php endif; ?>
+												</a>
 
 
-												</div>
+											</div>
+											<a href="view-verify-claims.php?claim_id=<?php echo $claim['Claim_ID']; ?>">
 												<div class="dz-info">
 													<br>
 													<div class="dz-head">
 														<p>Claim # <?php echo $claim['Claim_ID']; ?></p>
-														<h6 class="title"><a href="view-my-claim-details.php?claim_id=<?php echo $claim['Claim_ID']; ?>"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></a></h6>
+														<h6 class="title"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></h6>
 														<br>
 														<?php
 														if ($claim['Verification_Status'] == 'Pending') {
@@ -213,16 +216,18 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 														?>
 													</div>
 												</div>
-											</div>
+											</a>
 										</div>
-									<?php endforeach; ?>
-								</div>
-							</ul>
-						<?php endif; ?>
-					</div>
+
+									</div>
+								<?php endforeach; ?>
+							</div>
+						</ul>
+					<?php endif; ?>
+				</div>
 			</div>
 		<?php else : ?>
-			<div class="alert alert-danger" role="alert">
+			<div class=" alert alert-danger" role="alert">
 				Item not found.
 			</div>
 		<?php endif; ?>
