@@ -62,9 +62,12 @@ $itemData = $_SESSION['item_data'] ?? [];
     }
 
     .container {
-        margin-bottom: -24%;
+        margin-bottom: -10%;
     }
-    
+
+    .bg-white {
+        margin-top: -21px;
+    }
 </style>
 
 </head>
@@ -173,9 +176,9 @@ $itemData = $_SESSION['item_data'] ?? [];
         </main>
 
 
-
-
-
+        <!-- Menubar -->
+        <?php include('menubar.php'); ?>
+        <!-- Menubar -->
 
         <script src="assets/js/jquery.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

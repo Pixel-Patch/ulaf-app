@@ -2,7 +2,7 @@
 require('dbconn.php');
 session_start(); // Ensure the session is started
 
-$response = array('success' => false, 'message' => '');
+$response = array('success' => false, 'message' => '', 'claimId' => null);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate inputs
@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $distinguishableMarks = htmlspecialchars($_POST['distinguishableMarks'] ?? '', ENT_QUOTES, 'UTF-8');
     $proofImages = $_FILES['proofImages'] ?? [];
 
-
-    if (!$itemId  || empty($distinguishableMarks)) {
+    if (!$itemId || empty($distinguishableMarks)) {
         $response['message'] = 'All fields are required.';
     } else {
         // Check if user already submitted a pending claim
@@ -60,11 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $response['message'] = 'Failed to prepare statement: ' . $conn->error;
                 } else {
                     $proofImagesStr = implode(',', $uploadedFiles);
-                    $stmt->bind_param("isss", $itemId, $userId, $distinguishableMarks, $proofImagesStr);
+                    $stmt->bind_param("iiss", $itemId, $userId, $distinguishableMarks, $proofImagesStr);
 
                     if ($stmt->execute()) {
                         $response['success'] = true;
                         $response['message'] = 'Claim submitted successfully. Please wait for the item founder to verify your claim.';
+                        $response['claimId'] = $stmt->insert_id; // Retrieve the last inserted claim ID
                     } else {
                         $response['message'] = 'An error occurred while submitting your claim. Please try again later.';
                     }

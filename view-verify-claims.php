@@ -57,7 +57,20 @@ if ($claimDetails) {
 ?>
 
 <style>
-	/* Your existing CSS styles */
+	.dz-product-detail {
+		margin-top: -29px;
+
+	}
+
+	.buttonf {
+		padding-bottom: 0px;
+		margin-top: 7px;
+
+	}
+
+	.dz-product-detail .item-wrapper {
+		margin-bottom: -28px;
+	}
 </style>
 </head>
 
@@ -121,26 +134,26 @@ if ($claimDetails) {
 					if ($claimDetails['Claim_Status'] === 'Returned' || $claimDetails['Claim_Status'] === 'Retrieved') :
 						$buttonText = ($claimDetails['Claim_Status'] === 'Returned') ? 'Item Returned' : 'Item Retrieved';
 					?>
-						<div class="footer fixed bg-white">
-							<div class="container">
+						<div class="fixed bg-white">
+							<div class="container buttonf">
 								<button type="button" class="btn btn-info btn-lg rounded-xl btn-thin w-100 gap-2"><?php echo $buttonText; ?></button>
 							</div>
 						</div>
 					<?php elseif ($declinedClaim) : ?>
-						<div class="footer fixed bg-white">
-							<div class="container">
+						<div class="fixed bg-white">
+							<div class="container buttonf">
 								<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Declined : Claim Closed</button>
 							</div>
 						</div>
 					<?php elseif ($approveClaim) : ?>
-						<div class="footer fixed bg-white">
-							<div class="container">
+						<div class="fixed bg-white">
+							<div class="container buttonf">
 								<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="location.href='view-message.php?claim_id=<?php echo $claimId; ?>'">Message Now</button>
 							</div>
 						</div>
 					<?php elseif ($pendingClaim) : ?>
-						<div class="footer fixed bg-white">
-							<div class="container">
+						<div class="fixed bg-white">
+							<div class="container buttonf">
 								<div class="row">
 									<div class="col-1"></div>
 									<div class="col-4 px-0">
@@ -161,6 +174,10 @@ if ($claimDetails) {
 			</div>
 		</main>
 		<!-- Main Content End -->
+
+		<!-- Menubar -->
+		<?php include('menubar.php'); ?>
+		<!-- Menubar -->
 
 		<!-- Modals for Decline and Approve -->
 		<!-- Decline Claim Modal -->

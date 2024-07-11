@@ -90,6 +90,14 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 		max-width: 150px;
 		object-fit: cover;
 	}
+
+	.item-name {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzWcAbNuR8iS50rrGnYD-aLfuULyuaQ9s&libraries=places" async></script>
 
@@ -161,7 +169,7 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 						<?php if ($itemDetails['Poster_ID'] == $userId && $itemDetails['Item_Status'] != 'Returned' && $itemDetails['Item_Status'] != 'Retrieved') : ?>
 							<a href="edit-item-details.php?item_id=<?php echo $itemId  ?>">
 								<div class="right-content d-flex align-items-center gap-4">
-									<svg enable-background="new 0 0 461.75 461.75" height="18" viewBox="0 0 461.75 461.75" width="18" xmlns="http://www.w3.org/2000/svg">
+									<svg enable-background="new 0 0 461.75 461.75" height="24" viewBox="0 0 461.75 461.75" width="24" xmlns="http://www.w3.org/2000/svg">
 										<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#808080"></path>
 									</svg>
 							</a>
@@ -203,7 +211,7 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 													<br>
 													<div class="dz-head">
 														<p>Claim # <?php echo $claim['Claim_ID']; ?></p>
-														<h6 class="title"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></h6>
+														<h6 class="title item-name"><?php echo htmlspecialchars($itemDetails['Item_Name']); ?></h6>
 														<br>
 														<?php
 														if ($claim['Verification_Status'] == 'Pending') {
@@ -234,6 +242,11 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 	</div>
 	</main>
 	<!-- Main Content End -->
+
+
+	<!-- Menubar -->
+	<?php include('menubar.php'); ?>
+	<!-- Menubar -->
 
 
 

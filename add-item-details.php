@@ -2,10 +2,6 @@
 $title = "ULAF - Add Item Details | PixelPatch";
 require("header.php");
 
-
-
-
-
 ?>
 
 <!-- Include the Select2 CSS file -->
@@ -52,6 +48,10 @@ require("header.php");
         border-radius: 5px;
         padding: 5px;
         background: #fff;
+    }
+
+    .p-b100 {
+        padding-bottom: 59px;
     }
 </style>
 
@@ -137,7 +137,7 @@ require("header.php");
                         <textarea id="addDescription" class="form-control" name="addDescription" aria-label=" "></textarea>
                     </div>
                     <br>
-                    <div class="  bottom-0 bg-white">
+                    <div class="buttonf bottom-0 bg-white">
                         <a href="javascript:void(0);" type="submit" class="btn btn-lg btn-thin btn-primary w-100 rounded-xl" onclick="submitItemDetails()" id="submitButton">Submit</a>
                     </div>
                 </form>
@@ -235,8 +235,8 @@ require("header.php");
                             new bootstrap.Modal(document.getElementById('alertModal')).show();
                             if (data.status === 'success') {
                                 setTimeout(() => {
-                                    window.location.href = 'index.php';
-                                }, 2000);
+                                    window.location.href = `view-item-details.php?item_id=${data.itemId}`;
+                                }, 2000); // Redirect after 2 seconds (adjust as needed)
                             }
                         } catch (error) {
                             console.error('Invalid JSON response:', error);

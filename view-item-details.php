@@ -84,6 +84,11 @@ if ($itemId) {
 		margin-right: 13px;
 		margin-top: 6px;
 	}
+
+	.buttonf {
+		padding-bottom: 0px;
+
+	}
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzWcAbNuR8iS50rrGnYD-aLfuULyuaQ9s&libraries=places" async></script>
 
@@ -225,36 +230,42 @@ if ($itemId) {
 					</div>
 				<?php endif; ?>
 			</div>
+
+
+			<?php if ($isPoster) : ?>
+				<div class="fixed bg-white">
+					<div class="buttonf container">
+						<a href="view-my-post-claims.php?item_id=<?php echo $itemId; ?>" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">View My Post Claims</a>
+					</div>
+				</div>
+			<?php elseif ($pendingClaim) : ?>
+				<div class="fixed bg-white">
+					<div class="buttonf container">
+						<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimSubmittedModal">Claim Submitted</button>
+					</div>
+				</div>
+			<?php elseif (in_array(strtolower($itemDetails['Item_Status']), ['claimed', 'returning', 'retrieving', 'returned', 'retrieved'])) : ?>
+				<div class="fixed bg-white">
+					<div class="buttonf container">
+						<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimModal">Dispute Claim</button>
+					</div>
+				</div>
+			<?php else : ?>
+				<div class="fixed bg-white">
+					<div class="buttonf container">
+						<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimModal">Claim Item</button>
+					</div>
+				</div>
+			<?php endif; ?>
+
+
+
+			<!-- Menubar -->
+			<?php include('menubar.php'); ?>
+			<!-- Menubar -->
+
 		</main>
 		<!-- Main Content End -->
-
-		<?php if ($pendingClaim) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimSubmittedModal">Claim Submitted</button>
-				</div>
-			</div>
-		<?php elseif (in_array(strtolower($itemDetails['Item_Status']), ['claimed', 'returning', 'retrieving', 'returned', 'retrieved'])) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimModal">Dispute Claim</button>
-				</div>
-			</div>
-		<?php else : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimModal">Claim Item</button>
-				</div>
-			</div>
-		<?php endif; ?>
-
-		<?php if ($isPoster) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<a href="view-my-post-claims.php?item_id=<?php echo $itemId; ?>" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">View My Post Claims</a>
-				</div>
-			</div>
-		<?php endif; ?>
 
 
 		<!-- Claim Submitted Modal -->
@@ -394,14 +405,11 @@ if ($itemId) {
 		}
 
 		function submitClaim() {
-			// Get form data
 			const form = document.getElementById('claim-form');
 			const formData = new FormData(form);
 
-			// Append the item ID
 			formData.append('item_id', "<?php echo $itemId; ?>");
 
-			// Send the request
 			fetch('submit-claim.php', {
 					method: 'POST',
 					body: formData
@@ -410,6 +418,7 @@ if ($itemId) {
 				.then(data => {
 					if (data.success) {
 						showSuccessModal(data.message);
+						window.location.href = `view-my-claim-details.php?claim_id=${data.claimId}`;
 					} else {
 						showErrorModal(data.message, true);
 					}
