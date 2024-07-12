@@ -25,14 +25,15 @@ if ($stmt = $conn->prepare($claimsQuery)) {
 $mypost = [];
 $postsQuery = "SELECT * FROM items WHERE Poster_ID = ? ORDER BY Posted_Date DESC";
 
-
 if ($stmt = $conn->prepare($postsQuery)) {
 	$stmt->bind_param("i", $userId);
 	$stmt->execute();
 	$result = $stmt->get_result();
 
 	while ($row = $result->fetch_assoc()) {
-		$mypost[] = $row;
+		if ($row['Poster_ID'] == $userId) {
+			$mypost[] = $row;
+		}
 	}
 }
 ?>

@@ -102,6 +102,12 @@ $oldestItems = fetchData($conn, $oldestItemsQuery);
 		object-fit: cover;
 	}
 
+	.responsive-imagee {
+		max-height: 180px;
+		max-width: 150px;
+		object-fit: cover;
+	}
+
 	.description {
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
@@ -182,9 +188,9 @@ $oldestItems = fetchData($conn, $oldestItemsQuery);
 							?>
 								<div class="swiper-slide">
 									<div class="dz-card-overlay style-1" style="border-radius: 50px;">
-										<div class="dz-media">
+										<div class="dz-media ">
 											<a href="view-item-details.php?item_id=<?php echo $item['Item_ID']; ?>">
-												<img src="assets/uploads/items/<?php echo $firstImage; ?>" alt="image">
+												<img src="assets/uploads/items/<?php echo $firstImage; ?>" alt="image" class="responsive-imagee">
 											</a>
 										</div>
 										<div class="dz-info">
