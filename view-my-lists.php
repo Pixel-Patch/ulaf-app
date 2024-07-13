@@ -3,23 +3,39 @@ $title = "ULAF - My List | PixelPatch";
 require("header.php");
 require("fetch-userid.php");
 
-// Fetch user claims
-$myclaims = [];
-$claimsQuery = "SELECT items.*, claims.Claim_ID, claims.Claim_Status, claims.Proof, claims.Proof_Image, claims.Claim_Date, claims.Verification_Status, claims.Verification_Date
+		// Fetch user claims
+		$myclaims = [];
+
+		// SQL query to select the claims and corresponding items for a specific user, ordered by Claim_Date in descending order
+		$claimsQuery = "SELECT items.*, claims.Claim_ID, claims.Claim_Status, claims.Proof, claims.Proof_Image, claims.Claim_Date, claims.Verification_Status, claims.Verification_Date, claims.Claimer_ID
                 FROM claims 
                 JOIN items ON claims.Item_ID = items.Item_ID
                 WHERE claims.Claimer_ID = ?
-				ORDER BY claims.Claim_Date DESC";
+                ORDER BY claims.Claim_Date DESC";
 
-if ($stmt = $conn->prepare($claimsQuery)) {
-	$stmt->bind_param("i", $userId);
-	$stmt->execute();
-	$result = $stmt->get_result();
+		if ($stmt = $conn->prepare($claimsQuery)) {
+			// Bind the userId parameter to the prepared statement
+			$stmt->bind_param("i", $userId);
 
-	while ($row = $result->fetch_assoc()) {
-		$myclaims[] = $row;
-	}
-}
+			// Execute the prepared statement
+			$stmt->execute();
+
+			// Get the result set from the executed statement
+			$result = $stmt->get_result();
+
+			// Fetch all rows from the result set into the $mypost array
+			while ($row = $result->fetch_assoc()) {
+				// Check if Claimer_ID matches $userId
+				if ($row['Claimer_ID'] == $userId) {
+					$myclaims[] = $row;
+				}
+			}
+
+			// Close the statement
+			$stmt->close();
+		}
+
+// Now $myclaims contains all the claims made by the user with Claimer_ID = $userId
 
 // Fetch user posts
 $mypost = [];
@@ -130,7 +146,7 @@ if ($stmt = $conn->prepare($postsQuery)) {
 														<?php
 														if ($item['Verification_Status'] == 'Pending') {
 															echo '<span class="badge badge-info" style="font-size: 18px; position: absolute; bottom: 0; right: 0; margin-right: 17px; margin-bottom: 14px;">Pending</span>';
-														} elseif ($item['Verification_Status'] == 'Cl') {
+														} elseif ($item['Verification_Status'] == 'Declined') {
 															echo '<span class="badge badge-dark" style="font-size: 18px; position: absolute; bottom: 0; right: 0; margin-right: 17px; margin-bottom: 14px;" >Declined</span>';
 														} elseif ($item['Verification_Status'] == 'Approved') {
 															echo '<span class="badge badge-success" style="font-size: 18px; position: absolute; bottom: 0; right: 0; margin-right: 17px; margin-bottom: 14px;" >Approved</span>';

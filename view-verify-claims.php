@@ -23,6 +23,11 @@ if ($claimId && $userId) {
         INNER JOIN categories ON items.Category_ID = categories.Category_ID
         WHERE claims.Claim_ID = ?
     ");
+
+	if ($stmt === false) {
+		die('Prepare() failed: ' . htmlspecialchars($conn->error));
+	}
+
 	$stmt->bind_param("i", $claimId);
 	$stmt->execute();
 	$result = $stmt->get_result();
@@ -59,17 +64,19 @@ if ($claimDetails) {
 <style>
 	.dz-product-detail {
 		margin-top: -29px;
-
 	}
 
 	.buttonf {
 		padding-bottom: 0px;
 		margin-top: 7px;
-
 	}
 
 	.dz-product-detail .item-wrapper {
 		margin-bottom: -28px;
+	}
+
+	.ph {
+		font-size: 12px;
 	}
 </style>
 </head>
@@ -201,30 +208,36 @@ if ($claimDetails) {
 			</div>
 		</div>
 
-
-
-		<!-- Your existing modals for decline and approve -->
-
 		<!-- Approve Claim Modal -->
 		<div class="modal fade" id="approveModal">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Approve Claim</h5>
+						<h5 class="modal-title">Confirm Claim Approval</h5>
 						<button class="btn-close" data-bs-dismiss="modal">
 							<i class="fa-solid fa-xmark"></i>
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Are you sure you want to approve claim # <?php echo $claimId; ?>?</p>
+						<h6>You are about to approve claim #<?php echo $claimId; ?>? </h6>
+						<br>
+						<p class="ph">
+							Approving this claim will enable the claimant to communicate with you directly through our platform.<br>
+							 This includes access to your social media details and contact number, allowing for seamless and efficient communication.
+							<br>
+							<br>
+							Rest assured that our platform prioritizes user privacy and security, and any personal information shared will be used solely for the purpose of resolving this claim.
+						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-sm btn-success" onclick="approveClaim()">Approve</button>
+						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-sm btn-success" onclick="approveClaim()">Confirm Approval</button>
 					</div>
 				</div>
 			</div>
 		</div>
+
+
 
 		<!-- Modal for alerts -->
 		<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalCenterTitle" aria-hidden="true">

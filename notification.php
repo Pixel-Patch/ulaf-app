@@ -1,53 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$title = "ULAF - My Notification | PixelPatch";
+require('header.php');
 
-<head>
+require('dbconn.php');
 
-	<!-- Title -->
-	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
+require('fetch-userid.php'); // Ensure this file sets $userId
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="DexignZone">
-	<meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
+// Fetch notifications for the current user
+$sql = "
+    SELECT Notification_ID, Notification_Text, Timestamp 
+    FROM notifications 
+    WHERE User_ID = ?
+    ORDER BY Timestamp DESC
+";
 
-	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta property="og:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta property="og:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-
-	<meta name="format-detection" content="telephone=no">
-
-	<meta name="twitter:title" content="Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone">
-	<meta name="twitter:description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
-
-	<meta name="twitter:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-	<meta name="twitter:card" content="summary_large_image">
-
-	<!-- Mobile Specific -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, minimal-ui, viewport-fit=cover">
-
-	<!-- Favicons Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-
-	<!-- Global CSS -->
-	<link href="assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
-	<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-
-	<!-- Stylesheets -->
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
-
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
 </head>
 
 <body>
@@ -88,116 +60,19 @@
 			<div class="container pb-0 overflow-hidden">
 				<div class="dz-list notification-list">
 					<ul>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/1.jpg" alt="">
+						<?php while ($row = $result->fetch_assoc()) : ?>
+							<li class="list-items pull_delete">
+								<div class="media">
+									<div class="media-60 m-r10">
+										<img src="assets/images/avatar/1.jpg" alt="">
+									</div>
+									<div class="list-content">
+										<h5 class="title"><?php echo htmlspecialchars($row['Notification_Text']); ?></h5>
+										<span class="date"><?php echo date('d M Y', strtotime($row['Timestamp'])); ?></span>
+									</div>
 								</div>
-								<div class="list-content">
-									<h5 class="title">New Arrivals Alert!</h5>
-									<span class="date">15 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/2.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Flash Sale Announcement</h5>
-									<span class="date">21 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/3.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Exclusive Discounts Inside</h5>
-									<span class="date">10 March 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/4.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Limited Stock - Act Fast!</h5>
-									<span class="date">20 September 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/5.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Get Ready to Shop</h5>
-									<span class="date">15 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/1.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Don't Miss Out on Savings</h5>
-									<span class="date">24 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/2.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Special Offer Just for You</h5>
-									<span class="date">28 August 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/3.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Don't Miss Out on Savings</h5>
-									<span class="date">15 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/4.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Get Ready to Shop</h5>
-									<span class="date">15 July 2023</span>
-								</div>
-							</div>
-						</li>
-						<li class="list-items pull_delete">
-							<div class="media">
-								<div class="media-60 m-r10">
-									<img src="assets/images/avatar/5.jpg" alt="">
-								</div>
-								<div class="list-content">
-									<h5 class="title">Special Offer Just for You</h5>
-									<span class="date">15 July 2023</span>
-								</div>
-							</div>
-						</li>
+							</li>
+						<?php endwhile; ?>
 					</ul>
 				</div>
 			</div>
@@ -224,6 +99,53 @@
 			});
 		})
 	</script>
+
+	<script>
+		function checkNewClaims() {
+			$.ajax({
+				url: 'check_new_claims.php',
+				method: 'GET',
+				dataType: 'json',
+				success: function(response) {
+					if (response.newClaims && response.newClaims.length > 0) {
+						insertNotifications(response.newClaims);
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error('Error checking for new claims:', error);
+				}
+			});
+		}
+
+		function insertNotifications(newClaims) {
+			$.ajax({
+				url: 'insert_notifications.php',
+				method: 'POST',
+				data: {
+					claims: JSON.stringify(newClaims)
+				},
+				dataType: 'json',
+				success: function(response) {
+					if (response.success) {
+						console.log('Notifications inserted successfully');
+					} else {
+						console.error('Failed to insert notifications');
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error('Error inserting notifications:', error);
+				}
+			});
+		}
+
+		// Run the check every 30 seconds
+		setInterval(checkNewClaims, 30000);
+	</script>
 </body>
 
 </html>
+
+<?php
+$stmt->close();
+$conn->close();
+?>

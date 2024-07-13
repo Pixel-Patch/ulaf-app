@@ -4,6 +4,7 @@ $title = "ULAF - Home | PixelPatch";
 require("header.php");
 require("fetch-data.php"); // Include the fetch-user-data script
 $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
+require("fetch-userid.php")
 ?>
 
 </head>
@@ -14,6 +15,11 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 		height: 150px;
 		width: 150px;
 		margin-top: -30px;
+	}
+	.responsive-image {
+		max-height: 125px;
+		max-width: 150px;
+		object-fit: cover;
 	}
 </style>
 
@@ -117,38 +123,63 @@ $userData = $_SESSION['user_data'] ?? []; // Retrieve user data from session
 
 					<!-- Most Ordered -->
 					<div class="title-bar">
-						<h5 class="title">Most Ordered</h5>
+						<h5 class="title">My Returned / Retrieved</h5>
 					</div>
 					<div class="swiper overlay-swiper2">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<div class="dz-card list style-4">
-									<div class="dz-media">
-										<img src="assets/images/order/pic1.png" alt="">
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="product-detail.php">Creamy Latte Coffee</a></h6>
-										<ul class="dz-meta">
-											<li class="category flex-1">Beverages</li>
-											<li><a href="javascript:void(0);"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="swiper-slide">
-								<div class="dz-card list style-4">
-									<div class="dz-media">
-										<img src="assets/images/order/pic2.png" alt="">
-									</div>
-									<div class="dz-content">
-										<h6 class="title"><a href="product-detail.php">Ombe Ice Coffee Latte</a></h6>
-										<ul class="dz-meta">
-											<li class="category flex-1">Beverages</li>
-											<li><a href="javascript:void(0);"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
+							<?php
+							// Query to fetch items with status 'Returned' or 'Retrieved' for the current user
+							$query = "
+    SELECT `Item_ID`, `Item_Name`, `Image`, `Type`, `Category_ID`, `Description`, `Pin_Location`, `Posted_Date`, `Current_Location`, `Poster_ID`, `Item_Status`, `Latitude`, `Longitude`, `Retrieved_By`, `Retrieved_Date`
+    FROM `items`
+    WHERE `Poster_ID` = ? AND (`Item_Status` = 'Returned' OR `Item_Status` = 'Retrieved')
+";
+
+							$stmt = $conn->prepare($query);
+							$stmt->bind_param("i", $userId); // Assuming $userId is an integer
+							$stmt->execute();
+							$result = $stmt->get_result();
+
+							$myclaims = [];
+							while ($row = $result->fetch_assoc()) {
+								// Check if Poster_ID matches $userId
+								if ($row['Poster_ID'] == $userId) {
+									$myclaims[] = $row;
+								}
+							}
+
+							// Display the items
+							if (!empty($myclaims)) {
+								foreach ($myclaims as $item) {
+									$itemID = $item['Item_ID'];
+									$itemName = $item['Item_Name'];
+									$categoryID = $item['Category_ID'];
+									// Fetch category name
+									$categoryQuery = "SELECT `Category_Name` FROM `categories` WHERE `Category_ID` = $categoryID";
+									$categoryResult = mysqli_query($conn, $categoryQuery);
+									$categoryName = '';
+									if ($categoryResult) {
+										$categoryRow = mysqli_fetch_assoc($categoryResult);
+										$categoryName = $categoryRow['Category_Name'];
+									}
+									echo "
+        <div class='swiper-slide'>
+            <div class='dz-card list style-4'>
+                <div class='dz-media'>
+                    <img src='assets/uploads/items/{$item['Image']}' alt='{$itemName}' class= 'responsive-image'>
+                </div>
+                <div class='dz-content'>
+                    <h6 class='title'><a href='view-item-details.php?item_id={$itemID}'>{$itemName}</a></h6>
+                    <ul class='dz-meta'>
+                        <li class='category flex-1'>{$categoryName}</li>
+                        <li><a href='view-item-details.php?item_id={$itemID}'><i class='fa-solid fa-arrow-up-right-from-square'></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>";
+								}
+							}
+							?>
 						</div>
 					</div>
 				</div>

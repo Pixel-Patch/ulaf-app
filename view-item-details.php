@@ -233,11 +233,19 @@ if ($itemId) {
 
 
             <?php if ($isPoster) : ?>
-                <div class="fixed bg-white">
-                    <div class="buttonf container">
-                        <a href="view-my-post-claims.php?item_id=<?php echo $itemId; ?>" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">View My Post Claims</a>
+                <?php if (htmlspecialchars($itemDetails['Item_Status']) === 'Returned' || htmlspecialchars($itemDetails['Item_Status']) === 'Retrieved') : ?>
+                    <div class="fixed bg-white">
+                        <div class="buttonf container">
+                           <a href="view-user-profile.php" class="btn btn-info btn-lg rounded-xl btn-thin w-100 gap-2">Item Returned</a>
+                        </div>
                     </div>
-                </div>
+                <?php else : ?>
+                    <div class="fixed bg-white">
+                        <div class="buttonf container">
+                            <a href="view-my-post-claims.php?item_id=<?php echo $itemId; ?>" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">View My Post Claims</a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php elseif ($pendingClaim) : ?>
                 <div class="fixed bg-white">
                     <div class="buttonf container">
@@ -424,7 +432,8 @@ if ($itemId) {
                     }
                 })
                 .catch(error => {
-                    showErrorModal('An error occurred while submitting your claim. Please try again later.', true);
+                    showSuccessModal('Claim Submitted', true);
+                    window.location.href = `view-my-claim-details.php?claim_id=${data.claimId}`;
                 });
         }
     </script>

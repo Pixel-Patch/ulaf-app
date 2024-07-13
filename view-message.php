@@ -288,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				let messageImage = $("#messageImage")[0].files[0];
 				let messageContent = message ? `<div class="bubble">${message}</div>` : '';
 				if (messageImage) {
-					messageContent += `<div class="bubble"><img src="${messageImage.name}" alt="Image"></div>`;
+					messageContent += `<div class="bubble"><img src="assets/uploads/messages/${messageImage.name}" alt="Image"></div>`;
 				}
 
 				$(".chat-box-area").append(`

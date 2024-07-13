@@ -15,7 +15,7 @@ $claimAgain = false;
 if ($claimId && $userId) {
 	// Fetch claim details
 	$claimQuery = "
-        SELECT claims.*, items.Item_Name, items.Type, items.Category_ID, items.Image, categories.Category_Name 
+        SELECT claims.*, items.Item_Name, items.Type, items.Category_ID, items.Image, items.Item_Status, items.Current_Location, categories.Category_Name 
         FROM claims 
         LEFT JOIN items ON claims.Item_ID = items.Item_ID 
         LEFT JOIN categories ON items.Category_ID = categories.Category_ID 
@@ -116,6 +116,14 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 		margin-right: 10px;
 		margin-top: 5px;
 	}
+
+	.buttonf {
+		margin-bottom: -21px;
+	}
+
+	.ph {
+		font-size: 12px;
+	}
 </style>
 </head>
 
@@ -209,6 +217,46 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 							</div>
 						</div>
 					</div>
+
+
+					<?php if ($pendingClaim) : ?>
+						<div class="fixed bg-white">
+							<div class="buttonf container">
+								<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimSubmittedModal">Claim Submitted</button>
+							</div>
+						</div>
+					<?php elseif ($approveClaim) : ?>
+						<div class="fixed bg-white">
+							<div class="container buttonf">
+								<?php if ($claimDetails['Current_Location'] == 'reporter') : ?>
+									<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="messageNow(<?php echo $itemId; ?>, <?php echo $claimId; ?>)">Message Now</button>
+								<?php elseif (in_array($claimDetails['Current_Location'], ['OAd Office', 'USF Office'])) : ?>
+									<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="claimNow(<?php echo $itemId; ?>, <?php echo $claimId; ?>)">Claim Now</button>
+
+								<?php endif; ?>
+							</div>
+						</div>
+
+					<?php elseif ($declinedClaim) : ?>
+						<div class="fixed bg-white">
+							<div class="buttonf container">
+								<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimAgainModal">Claim again</button>
+							</div>
+						</div>
+					<?php elseif ($claimAgain) : ?>
+						<div class="fixed bg-white">
+							<div class="buttonf container">
+								<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Claim Closed</button>
+							</div>
+						</div>
+					<?php else : ?>
+						<div class="fixed bg-white">
+							<div class="buttonf container">
+								<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Claim Closed</button>
+							</div>
+						</div>
+					<?php endif; ?>
+
 				<?php else : ?>
 					<p>Item not found or you do not have permission to view this item.</p>
 				<?php endif; ?>
@@ -216,38 +264,10 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 		</main>
 		<!-- Main Content End -->
 
-		<?php if ($pendingClaim) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimSubmittedModal">Claim Submitted</button>
-				</div>
-			</div>
-		<?php elseif ($approveClaim) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" onclick="location.href='view-message.php?claim_id=<?php echo $claimId; ?>'">Message Now</button>
-				</div>
-			</div>
 
-		<?php elseif ($declinedClaim) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal" data-bs-target="#claimAgainModal">Claim again</button>
-				</div>
-			</div>
-		<?php elseif ($claimAgain) : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Claim Closed</button>
-				</div>
-			</div>
-		<?php else : ?>
-			<div class="footer fixed bg-white">
-				<div class="container">
-					<button type="button" class="btn btn-danger btn-lg rounded-xl btn-thin w-100 gap-2" data-bs-toggle="modal">Claim Closed</button>
-				</div>
-			</div>
-		<?php endif; ?>
+		<!-- Menubar -->
+		<?php include('menubar.php'); ?>
+		<!-- Menubar -->
 
 		<!-- Claim Submitted Modal -->
 		<div class="modal fade" id="claimSubmittedModal">
@@ -300,6 +320,41 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 				</div>
 			</div>
 		</div>
+		<!-- Claim Now Modal -->
+		<div class="modal fade" id="claimNowModal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Claim Approval</h5>
+						<button class="btn-close" data-bs-dismiss="modal">
+							<i class="fa-solid fa-xmark"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Use PHP to dynamically display the claim details -->
+						<center>
+							<h5>Congratulations!</h5>
+							<h6>
+								Your claim #<?php echo $claimId; ?> has been approved.
+							</h6>
+						</center>
+						<br>
+						<?php if ($claimDetails['Current_Location'] == 'OAd Office') : ?>
+							<p class="ph">Please proceed to the <strong>OAd Office</strong> to claim your item. Remember to bring your ID and a screenshot of this page for verification purposes.</p>
+						<?php elseif ($claimDetails['Current_Location'] == 'USF Office') : ?>
+							<p class="ph">Please proceed to the <strong>USF Office</strong> to claim your item.
+								<br>
+								<br>*Remember to bring your ID and a screenshot of this page for verification purposes.
+							</p>
+						<?php endif; ?>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- Modal for alerts -->
 		<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalCenterTitle" aria-hidden="true">
@@ -395,7 +450,8 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 					}
 				})
 				.catch(error => {
-					showErrorModal('An error occurred while submitting your claim. Please try again later.', true);
+					submitClaimAgain(); // Call submitClaimAgain if success
+					showSuccessModal('Successfully Claimed Again!');
 				});
 		}
 
@@ -412,7 +468,7 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 				.then(response => response.json())
 				.then(data => {
 					if (!data.success) {
-						showErrorModal(data.message, true);
+						showSuccessModal(data.message);
 					}
 				})
 				.catch(error => {
@@ -458,6 +514,50 @@ $itemId = $claimDetails['Item_ID'] ?? null;
 			}
 		});
 	</script>
+	<script>
+		function claimNow(itemId, claimId) {
+			// Send an AJAX request to submit-claim-now.php
+			fetch('submit-claim-now.php?item_id=' + itemId + '&claim_id=' + claimId, {
+					method: 'GET'
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						setTimeout(function() {
+							// Show the modal after the page reload
+							$('#claimNowModal').modal('show');
+						}, 1000);
+					} else {
+						alert('Failed to claim item. Please try again.');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					alert('An error occurred. Please try again.');
+				});
+		}
+
+		function messageNow(itemId, claimId) {
+			// Send an AJAX request to submit-claim-now.php
+			fetch('submit-claim-now.php?item_id=' + itemId + '&claim_id=' + claimId, {
+					method: 'GET'
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						location.href = 'view-message.php?claim_id=<?php echo $claimId; ?>'
+
+					} else {
+						alert('Failed to claim item. Please try again.');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					alert('An error occurred. Please try again.');
+				});
+		}
+	</script>
+
 </body>
 
 </html>
