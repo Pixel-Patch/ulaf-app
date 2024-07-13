@@ -59,13 +59,13 @@
 			<div class="main-screen">
 				<div class="loader"><img src="assets/images/preloader/logo.svg" class="wow zoomInDown" alt=""></div>
 				<div class="load-text">
-					<span>O</span>
-					<span>m</span>
-					<span>b</span>
-					<span>e</span>
+					<span>U</span>
+					<span>L</span>
+					<span>A</span>
+					<span>F</span>
 				</div>
 			</div>
-			<p class="version wow bounceIn" data-wow-duration="0.5s" data-wow-delay="1s">Version 1.0</p>
+			<p class="version wow bounceIn" data-wow-duration="20s" data-wow-delay="5s">Version 1.0</p>
 		</div>
 		<!-- splash-->
 
